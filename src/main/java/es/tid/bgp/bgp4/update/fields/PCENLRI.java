@@ -40,7 +40,7 @@ public class PCENLRI extends LinkStateNLRI {
 	private int protocolID;//inicializado a 0(unknown)
 	private long routingUniverseIdentifier;
 	private PCEv4DescriptorsTLV PCEv4Descriptors;
-	//private PCEv4ScopeTLV PCEv4Scope;
+	private PCEv4ScopeTLV PCEv4Scope;
 	private PCEv4DomainTLV PCEv4Domain;
 	private PCEv4NeighboursTLV PCEv4Neigbour;
 
@@ -61,10 +61,10 @@ public class PCENLRI extends LinkStateNLRI {
 			PCEv4Descriptors.encode();
 			len=len+PCEv4Descriptors.getTotalTLVLength();
 		}
-		//if (PCEv4Scope!=null){
-		//	PCEv4Scope.encode();
-		//	len=len+PCEv4Scope.getTotalTLVLength();
-		//}
+		if (PCEv4Scope!=null){
+		    PCEv4Scope.encode();
+			len=len+PCEv4Scope.getTotalTLVLength();
+		}
 		if (PCEv4Domain!=null){
 			PCEv4Domain.encode();
 			len=len+PCEv4Domain.getTotalTLVLength();
@@ -96,10 +96,10 @@ public class PCENLRI extends LinkStateNLRI {
 			System.arraycopy(PCEv4Descriptors.getTlv_bytes(), 0, this.bytes, offset,PCEv4Descriptors.getTotalTLVLength());
 			offset=offset+PCEv4Descriptors.getTotalTLVLength();
 		}
-		//if (PCEv4Scope!=null){
-		//	System.arraycopy(PCEv4Scope.getTlv_bytes(), 0, this.bytes, offset,PCEv4Scope.getTotalTLVLength());
-		//	offset=offset+PCEv4Scope.getTotalTLVLength();
-		//}
+		if (PCEv4Scope!=null){
+			System.arraycopy(PCEv4Scope.getTlv_bytes(), 0, this.bytes, offset,PCEv4Scope.getTotalTLVLength());
+			offset=offset+PCEv4Scope.getTotalTLVLength();
+		}
 		if (PCEv4Domain!=null){
 			System.arraycopy(PCEv4Domain.getTlv_bytes(), 0, this.bytes, offset,PCEv4Domain.getTotalTLVLength());
 			offset=offset+PCEv4Domain.getTotalTLVLength();
@@ -109,7 +109,6 @@ public class PCENLRI extends LinkStateNLRI {
 			//offset=offset+PCEv4Neigbour.getTotalTLVLength();
 		}
 
-		
 	}
 	public void decode(){
 		//Decoding PCE NLRI
@@ -131,8 +130,11 @@ public class PCENLRI extends LinkStateNLRI {
 			int TlvType= BGP4TLVFormat.getType(this.bytes, offset);
 			int TlvLength=BGP4TLVFormat.getTotalTLVLength(this.bytes, offset);
 			switch(TlvType){
-				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_DOMAIN_ID:
+				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_SCOPE:
 					PCEv4Domain = new PCEv4DomainTLV(this.bytes, offset);
+					break;
+				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_DOMAIN_ID:
+					PCEv4Scope = new PCEv4ScopeTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_NEIGBOUR_ID:
 					PCEv4Neigbour = new PCEv4NeighboursTLV(this.bytes, offset);
@@ -149,12 +151,6 @@ public class PCENLRI extends LinkStateNLRI {
 				log.debug("sigo leyendo NodeDescriptorsSubTLV ");
 			}
 		}
-
-
-
-
-
-
 
 
 
@@ -192,6 +188,13 @@ public class PCENLRI extends LinkStateNLRI {
 		this.PCEv4Neigbour = PCENeighbourID;
 	}
 
+	public PCEv4ScopeTLV getPCEv4ScopeTLV() {
+		return PCEv4Scope;
+	}
+
+	public void setPCEv4ScopeTLV(PCEv4ScopeTLV PCEv4Scope) {
+		this.PCEv4Scope = PCEv4Scope;
+	}
 
 
 
@@ -201,7 +204,7 @@ public class PCENLRI extends LinkStateNLRI {
 		StringBuffer sb=new StringBuffer(1000);
 		sb.append( "PCENLRI [protocolID=" + protocolID +
 				", routingUniverseIdentifier=" + routingUniverseIdentifier +
-				", PCEDescriptors=" + PCEv4Descriptors.toString());
+				", PCEDescriptors=" + PCEv4Descriptors.toString() + ", PCEv4Scope=" + PCEv4Scope.toString());
 		if (PCEv4Domain!= null){
 				sb.append(PCEv4Domain.toString());
 		}
