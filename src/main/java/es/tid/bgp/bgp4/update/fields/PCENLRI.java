@@ -115,16 +115,17 @@ public class PCENLRI extends LinkStateNLRI {
 		boolean fin=false;
 		int offset = 4; //Cabecera del LinkState NLRI
 		protocolID = this.bytes[offset];
-		offset=offset +1; //identifier
+		offset=offset+1; //identifier
 		
 
 		long routingUniverseIdentifieraux1 = ((  ((long)bytes[offset]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+1]<<16) & 0xFF0000) | (((long)bytes[offset+2]<<8) & 0xFF00) |(((long)bytes[offset+3]) & 0xFF);
 		long routingUniverseIdentifieraux2 = ((  ((long)bytes[offset+4]&0xFF)   <<24)& 0xFF000000) |  (((long)bytes[offset+5]<<16) & 0xFF0000) | (((long)bytes[offset+6]<<8) & 0xFF00) |(((long)bytes[offset+7]) & 0xFF);
 		//this.setRoutingUniverseIdentifier((2^32)*routingUniverseIdentifieraux1+routingUniverseIdentifieraux2);
 		this.setRoutingUniverseIdentifier((routingUniverseIdentifieraux1 <<32)&0xFFFFFFFF00000000L | routingUniverseIdentifieraux2);
-		offset = offset +8;
-
+		offset = offset+8;//8-Byte Identifier
 		this.PCEv4Descriptors=new PCEv4DescriptorsTLV(this.bytes, offset);
+		offset= offset + 8;
+
 
 		while (!fin) {
 			int TlvType= BGP4TLVFormat.getType(this.bytes, offset);

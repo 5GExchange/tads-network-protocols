@@ -83,7 +83,7 @@ public abstract class BGP4SubTLV {
 		}
 
 		public static int getTotalSubTLVLength(byte []bytes, int offset) {
-			int len=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF)+4;		
+			int len=((((int)bytes[offset+2]&0xFF)<<8)& 0xFF00) |  ((int)bytes[offset+3] & 0xFF)+4;
 			return len;
 		}
 		

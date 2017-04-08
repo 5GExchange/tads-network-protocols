@@ -119,7 +119,7 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 	
 	public void decode(){
 		boolean fin=false;
-		int offset=4;
+		int offset=0;
 
 		while (!fin) {
 			int subtlvType= BGP4SubTLV.getType(tlv_bytes, offset);

@@ -170,7 +170,7 @@ public class PCEv4NeighboursTLV extends BGP4TLVFormat{
 		}
 
 		for (AreaIDNodeDescriptorSubTLV Area: AreaIDSubTLVs) {
-			sb.append("Local Arae: "+Area.toString());
+			sb.append("Local Area: "+Area.toString());
 		}
 
 		return sb.toString();

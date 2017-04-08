@@ -80,7 +80,7 @@ public class PCEv4DescriptorsTLV extends BGP4TLVFormat{
 
 	public void encode(){
 
-		int len = 4;//Header TLV
+		int len = 4;
 		this.setTLVValueLength(len);
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
 
