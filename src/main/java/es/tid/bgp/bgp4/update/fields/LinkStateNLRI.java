@@ -26,11 +26,7 @@ The format of the Link-State NLRI is shown in the following figure.
  */
 public abstract class LinkStateNLRI extends NLRI {
 	protected int NLRIType;
-	
 	protected int TotalNLRILength;
-	
-
-	
 	protected static final Logger log = LoggerFactory.getLogger("BGP4Parser");
 	
 	public LinkStateNLRI(){
