@@ -28,6 +28,7 @@ import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SharedRiskLinkGroupAt
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.TransceiverClassAndAppAttribTLV;
 import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MF_OTPAttribTLV;
 //******************************
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.*;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
 
@@ -187,6 +188,15 @@ public class LinkStateAttribute  extends PathAttribute{
 	PrefixMetricPrefixAttribTLV prefixMetricTLV;
 	OSPFForwardingAddressPrefixAttribTLV OSPFForwardingAddrTLV;
 
+	//new TE metrics added here by Andrea 28/09/2017
+	UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV;
+	MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV;
+	UndirectionalDelayVariationDescriptorSubTLV undirectionalDelayVariationTLV;
+	UndirectionalLinkLossDescriptorSubTLV undirectionalLinkLossTLV;
+	UndirectionalResidualBandwidthDescriptorSubTLV undirectionalResidualBwTLV;
+	UndirectionalAvailableBandwidthDescriptorSubTLV undirectionalAvailableBwTLV;
+	UndirectionalUtilizedBandwidthDescriptorSubTLV undirectionalUtilizedBwTLV;
+
 
 	public LinkStateAttribute(){		
 		super();
@@ -318,6 +328,44 @@ public class LinkStateAttribute  extends PathAttribute{
 			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
 		}
 
+		//UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV;
+		//MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV;
+		//UndirectionalDelayVariationDescriptorSubTLV undirectionalDelayVariationTLV;
+		//UndirectionalLinkLossDescriptorSubTLV undirectionalLinkLossTLV;
+		//UndirectionalResidualBandwidthDescriptorSubTLV undirectionalResidualBwTLV;
+		//UndirectionalAvailableBandwidthDescriptorSubTLV undirectionalAvailableBwTLV;
+		//UndirectionalUtilizedBandwidthDescriptorSubTLV undirectionalUtilizedBwTLV;
+		//New TE metrics
+		if(undirectionalLinkDelayTLV!=null){
+			undirectionalLinkDelayTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(minMaxUndirectionalLinkDelayTLV!=null){
+			minMaxUndirectionalLinkDelayTLV.encode();
+			pathAttributeLength=pathAttributeLength+minMaxUndirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(undirectionalDelayVariationTLV!=null){
+			undirectionalDelayVariationTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalDelayVariationTLV.getTotalTLVLength();
+		}
+		if(undirectionalLinkLossTLV!=null){
+			undirectionalLinkLossTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalLinkLossTLV.getTotalTLVLength();
+		}
+		if(undirectionalResidualBwTLV!=null){
+			undirectionalResidualBwTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalResidualBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalAvailableBwTLV!=null){
+			undirectionalAvailableBwTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalAvailableBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalUtilizedBwTLV!=null){
+			undirectionalUtilizedBwTLV.encode();
+			pathAttributeLength=pathAttributeLength+undirectionalUtilizedBwTLV.getTotalTLVLength();
+		}
+
+
 		//Length
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];
@@ -435,6 +483,37 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+availableLabels.getTotalTLVLength();
 		}
 
+
+		//New TE metrics
+		if(undirectionalLinkDelayTLV!=null){
+			System.arraycopy(undirectionalLinkDelayTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalLinkDelayTLV.getTotalTLVLength());
+			offset=offset+undirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(minMaxUndirectionalLinkDelayTLV!=null){
+			System.arraycopy(minMaxUndirectionalLinkDelayTLV.getTlv_bytes(),0, this.bytes,offset, minMaxUndirectionalLinkDelayTLV.getTotalTLVLength());
+			offset=offset+minMaxUndirectionalLinkDelayTLV.getTotalTLVLength();
+		}
+		if(undirectionalDelayVariationTLV!=null){
+			System.arraycopy(undirectionalDelayVariationTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalDelayVariationTLV.getTotalTLVLength());
+			offset=offset+undirectionalDelayVariationTLV.getTotalTLVLength();
+		}
+		if(undirectionalLinkLossTLV!=null){
+			System.arraycopy(undirectionalLinkLossTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalLinkLossTLV.getTotalTLVLength());
+			offset=offset+undirectionalLinkLossTLV.getTotalTLVLength();
+		}
+		if(undirectionalResidualBwTLV!=null){
+			System.arraycopy(undirectionalResidualBwTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalResidualBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalResidualBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalAvailableBwTLV!=null){
+			System.arraycopy(undirectionalAvailableBwTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalAvailableBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalAvailableBwTLV.getTotalTLVLength();
+		}
+		if(undirectionalUtilizedBwTLV!=null){
+			System.arraycopy(undirectionalUtilizedBwTLV.getTlv_bytes(),0, this.bytes,offset, undirectionalUtilizedBwTLV.getTotalTLVLength());
+			offset=offset+undirectionalUtilizedBwTLV.getTotalTLVLength();
+		}
+
 	}
 	public void decode(){
 		boolean fin=false;
@@ -531,6 +610,37 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.PREFIX_ATTRIBUTE_TLV_TYPE_ROUTE_TAG:
 				this.routeTagTLV=new RouteTagPrefixAttribTLV(this.bytes, offset);
 				break;
+
+			//new TE metrics
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID:
+				this.undirectionalLinkDelayTLV=new UndirectionalLinkDelayDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_MINMAXUNDIRLINKDELAY_ID:
+				this.minMaxUndirectionalLinkDelayTLV=new MinMaxUndirectionalLinkDelayDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRDELAYVAR_ID:
+				this.undirectionalDelayVariationTLV=new UndirectionalDelayVariationDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKLOSS_ID:
+				this.undirectionalLinkLossTLV=new UndirectionalLinkLossDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRESIDUALBW_ID:
+				this.undirectionalResidualBwTLV=new UndirectionalResidualBandwidthDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID:
+				this.undirectionalAvailableBwTLV=new UndirectionalAvailableBandwidthDescriptorSubTLV(this.bytes, offset);
+				break;
+
+			case LinkStateAttributeTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID:
+				this.undirectionalUtilizedBwTLV=new UndirectionalUtilizedBandwidthDescriptorSubTLV(this.bytes, offset);
+				break;
+
 
 			default:
 				log.warn("Unknown TLV found: "+TLVType);
@@ -693,6 +803,70 @@ public class LinkStateAttribute  extends PathAttribute{
 		this.availableLabels = availableLabels;
 	}
 
+
+	//new TE metrics
+	public UndirectionalLinkDelayDescriptorSubTLV getUndirectionalLinkDelayTLV() {
+		return undirectionalLinkDelayTLV;
+	}
+
+	public void setUndirectionalLinkDelayTLV(UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV) {
+		this.undirectionalLinkDelayTLV = undirectionalLinkDelayTLV;
+	}
+
+	public MinMaxUndirectionalLinkDelayDescriptorSubTLV getMinMaxUndirectionalLinkDelayTLV() {
+		return minMaxUndirectionalLinkDelayTLV;
+	}
+
+	public void setMinMaxUndirectionalLinkDelayTLV(
+			MinMaxUndirectionalLinkDelayDescriptorSubTLV minMaxUndirectionalLinkDelayTLV) {
+		this.minMaxUndirectionalLinkDelayTLV = minMaxUndirectionalLinkDelayTLV;
+	}
+
+	public UndirectionalDelayVariationDescriptorSubTLV getUndirectionalDelayVariationTLV() {
+		return undirectionalDelayVariationTLV;
+	}
+
+	public void setUndirectionalDelayVariationTLV(
+			UndirectionalDelayVariationDescriptorSubTLV undirectionalDelayVariationTLV) {
+		this.undirectionalDelayVariationTLV = undirectionalDelayVariationTLV;
+	}
+
+	public UndirectionalLinkLossDescriptorSubTLV getUndirectionalLinkLossTLV() {
+		return undirectionalLinkLossTLV;
+	}
+
+	public void setUndirectionalLinkLossTLV(UndirectionalLinkLossDescriptorSubTLV undirectionalPackectLossTLV) {
+		this.undirectionalLinkLossTLV = undirectionalPackectLossTLV;
+	}
+
+	public UndirectionalResidualBandwidthDescriptorSubTLV getUndirectionalResidualBwTLV() {
+		return undirectionalResidualBwTLV;
+	}
+
+	public void setUndirectionalResidualBwTLV(UndirectionalResidualBandwidthDescriptorSubTLV undirectionalResidualBwTLV) {
+		this.undirectionalResidualBwTLV = undirectionalResidualBwTLV;
+	}
+
+	public UndirectionalAvailableBandwidthDescriptorSubTLV getUndirectionalAvailableBwTLV() {
+		return undirectionalAvailableBwTLV;
+	}
+
+	public void setUndirectionalAvailableBwTLV(
+			UndirectionalAvailableBandwidthDescriptorSubTLV undirectionalAvailableBwTLV) {
+		this.undirectionalAvailableBwTLV = undirectionalAvailableBwTLV;
+	}
+
+	public UndirectionalUtilizedBandwidthDescriptorSubTLV getUndirectionalUtilizedBwTLV() {
+		return undirectionalUtilizedBwTLV;
+	}
+
+	public void setUndirectionalUtilizedBwTLV(UndirectionalUtilizedBandwidthDescriptorSubTLV undirectionalUtilizedBwTLV) {
+		this.undirectionalUtilizedBwTLV = undirectionalUtilizedBwTLV;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		StringBuffer sb=new StringBuffer(1000);		
@@ -811,7 +985,46 @@ public class LinkStateAttribute  extends PathAttribute{
 		if (availableLabels!=null){
 			sb.append(availableLabels.toString());
 			sb.append("\r\n");
-		}else
+		}
+
+		if (undirectionalLinkDelayTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Link Delay TLV:");
+			sb.append("\n\t> "+undirectionalLinkDelayTLV.toString());
+		}
+		if(minMaxUndirectionalLinkDelayTLV != null){
+			sb.append(" ");
+			sb.append("> Min/Max Undirectional Link Delay TLV:");
+			sb.append("\n\t> "+minMaxUndirectionalLinkDelayTLV.toString());
+		}
+		if(undirectionalDelayVariationTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Delay Variation TLV:");
+			sb.append("\n\t> "+undirectionalDelayVariationTLV.toString());
+		}
+		if(undirectionalLinkLossTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Link Loss TLV:");
+			sb.append("\n\t> "+undirectionalLinkLossTLV.toString());
+		}
+		if(undirectionalResidualBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Residual Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalResidualBwTLV.toString());
+		}
+		if(undirectionalAvailableBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Available Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalAvailableBwTLV.toString());
+		}
+		if(undirectionalUtilizedBwTLV != null){
+			sb.append(" ");
+			sb.append("> Undirectional Utilized Bandwidth TLV:");
+			sb.append("\n\t> "+undirectionalUtilizedBwTLV.toString());
+		}
+
+
+		else
 			sb.append("There is no availableLabels");
 
 

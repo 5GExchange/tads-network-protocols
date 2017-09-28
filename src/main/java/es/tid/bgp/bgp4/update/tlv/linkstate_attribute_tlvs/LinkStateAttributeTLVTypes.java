@@ -57,7 +57,15 @@ public class LinkStateAttributeTLVTypes {
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_TRANSCEIVER_CLASS_AND_APPLICATION = 2498;
 	public static final int  LINK_ATTRIBUTE_TLV_TYPE_MF_OTP = 2499;
 	// *****************************
-	
+
+	//new TE metrics
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKDELAY_ID=1104;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_MINMAXUNDIRLINKDELAY_ID=1105;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRDELAYVAR_ID=1106;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKLOSS_ID=1107;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRESIDUALBW_ID=1108;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID=1109;//Draft BGP-LS
+	public static final int LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID=1110;//Draft BGP-LS
 	/**          
 	 *     
    +--------------+-----------------------+----------+-----------------+
