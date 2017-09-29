@@ -25,8 +25,15 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 	public void decode(){
 		int length = this.getTLVValueLength();
 		int offset = 4;
+		if (this.tlv_bytes!=null) {
+			return;
+		}
+		if (name==null){
+			name =new byte[length];
+		}
 		System.arraycopy(this.tlv_bytes,offset, name, 0, length);
 	}
+
 	
 	public void setName(String name)
 	{
