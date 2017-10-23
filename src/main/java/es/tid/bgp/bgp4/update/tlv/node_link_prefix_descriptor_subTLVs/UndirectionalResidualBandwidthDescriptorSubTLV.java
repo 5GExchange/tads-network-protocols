@@ -34,19 +34,30 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVFormat{
 	
 	
-	int residualBw;
+	//int residualBw;
+	float residualBw;
 	public UndirectionalResidualBandwidthDescriptorSubTLV(){
 		super();
 		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRESIDUALBW_ID);
 	}
 	
 	
+	/*
 	public int getResidualBw() {
 		return residualBw;
 	}
+    */
 
+	public float getResidualBw() {
+		return residualBw;
+	}
 
+	/*
 	public void setResidualBw(int residualBw) {
+		this.residualBw = residualBw;
+	}
+    */
+	public void setResidualBw(float residualBw) {
 		this.residualBw = residualBw;
 	}
 
@@ -64,10 +75,17 @@ public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVForma
 		//System.arraycopy(0, 0,  this.tlv_bytes, 0, 1);
 		//System.arraycopy(residualBw,0, this.tlv_bytes, 1, 4);
 		int offset=4;
-		this.tlv_bytes[offset ] = (byte)(residualBw >> 24 & 0xff);
+		/*this.tlv_bytes[offset ] = (byte)(residualBw >> 24 & 0xff);
 		this.tlv_bytes[offset + 1] = (byte)(residualBw >> 16 & 0xff);
 		this.tlv_bytes[offset + 2] = (byte)(residualBw >> 8 & 0xff);
 		this.tlv_bytes[offset + 3] = (byte)(residualBw & 0xff);
+		*/
+		int rbi=Float.floatToIntBits(residualBw);
+
+		this.tlv_bytes[offset ] = (byte)(rbi >>> 24);
+		this.tlv_bytes[offset + 1] = (byte)(rbi >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(rbi >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(rbi & 0xff);
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=4){
@@ -76,8 +94,12 @@ public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVForma
 		}
 		//System.arraycopy(this.tlv_bytes,0, residualBw, 0, 4);
 		int offset=4;
-		this.residualBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
-		
+		//this.residualBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
+		int rbi = 0;
+		for (int k = 0; k < 4; k++) {
+			rbi = (rbi << 8) | (this.tlv_bytes[k+4] & 0xff);
+		}
+		this.residualBw=Float.intBitsToFloat(rbi);
 	}
 
 	@Override
@@ -90,7 +112,7 @@ public class UndirectionalResidualBandwidthDescriptorSubTLV extends BGP4TLVForma
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + residualBw;
+		result = prime * result + (int)residualBw;
 		return result;
 	}
 

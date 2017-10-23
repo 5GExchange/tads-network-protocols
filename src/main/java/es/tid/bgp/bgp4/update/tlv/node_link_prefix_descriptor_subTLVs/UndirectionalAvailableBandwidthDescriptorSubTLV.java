@@ -35,21 +35,30 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVFormat{
 	
 	
-	int availableBw;
+	//int availableBw;
+	float availableBw;
 	public UndirectionalAvailableBandwidthDescriptorSubTLV(){
 		super();
 		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRAVAILABLEBW_ID);
 	}
 	
 	
-	public int getAvailableBw() {
+	//public int getAvailableBw() {
+	//	return availableBw;
+	//}
+	public float getAvailableBw() {
 		return availableBw;
 	}
 
 
-	public void setAvailableBw(int availableBw) {
+	//public void setAvailableBw(int availableBw) {
+	//	this.availableBw = availableBw;
+	//}
+
+	public void setAvailableBw(float availableBw) {
 		this.availableBw = availableBw;
 	}
+
 
 
 	public UndirectionalAvailableBandwidthDescriptorSubTLV(byte []bytes, int offset) {		
@@ -63,10 +72,18 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
 		int offset=4;
-		this.tlv_bytes[offset ] = (byte)(availableBw >> 24 & 0xff);
+		/*this.tlv_bytes[offset ] = (byte)(availableBw >> 24 & 0xff);
 		this.tlv_bytes[offset + 1] = (byte)(availableBw >> 16 & 0xff);
 		this.tlv_bytes[offset + 2] = (byte)(availableBw >> 8 & 0xff);
 		this.tlv_bytes[offset + 3] = (byte)(availableBw & 0xff);
+         */
+		int abi=Float.floatToIntBits(availableBw);
+
+		this.tlv_bytes[offset ] = (byte)(abi >>> 24);
+		this.tlv_bytes[offset + 1] = (byte)(abi >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(abi >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(abi & 0xff);
+
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=4){
@@ -74,9 +91,13 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 			//FIXME: esta mal formado Que hacer
 		}
 		//System.arraycopy(this.tlv_bytes,0, availableBw, 0, 4);
-		int offset=4;
-		this.availableBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
-		
+		//int offset=4;
+		//this.availableBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
+		int abi = 0;
+		for (int k = 0; k < 4; k++) {
+			abi = (abi << 8) | (this.tlv_bytes[k+4] & 0xff);
+		}
+		this.availableBw=Float.intBitsToFloat(abi);
 	}
 
 	@Override
@@ -89,7 +110,7 @@ public class UndirectionalAvailableBandwidthDescriptorSubTLV extends BGP4TLVForm
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + availableBw;
+		result = prime * result + (int)availableBw;
 		return result;
 	}
 

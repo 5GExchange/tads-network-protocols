@@ -8,19 +8,7 @@ import es.tid.bgp.bgp4.update.fields.pathAttributes.Generic_MP_Unreach_Attribute
 import es.tid.bgp.bgp4.update.fields.pathAttributes.MP_Unreach_Attribute;
 import es.tid.bgp.bgp4.update.tlv.LocalNodeDescriptorsTLV;
 import es.tid.bgp.bgp4.update.tlv.RemoteNodeDescriptorsTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4InterfaceAddressLinkDescriptorsSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv4NeighborAddressLinkDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6InterfaceAddressLinkDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.IPv6NeighborAddressLinkDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.LinkLocalRemoteIdentifiersLinkDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MinMaxUndirectionalLinkDelayDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.MultiTopologyIDLinkDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalAvailableBandwidthDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalDelayVariationDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkDelayDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalLinkLossDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalResidualBandwidthDescriptorSubTLV;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.UndirectionalUtilizedBandwidthDescriptorSubTLV;
+import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.*;
 import es.tid.protocol.commons.ByteHandler;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -107,15 +95,15 @@ public class TestBGPLSPathAttributes {
 				linkNLRI.setUndirectionalLinkLossTLV(ullSTLV);
 				
 				UndirectionalResidualBandwidthDescriptorSubTLV urbwSTLV = new UndirectionalResidualBandwidthDescriptorSubTLV();
-				urbwSTLV.setResidualBw(2);
+				urbwSTLV.setResidualBw(2.0f);
 				linkNLRI.setUndirectionalResidualBwTLV(urbwSTLV);
 				
 				UndirectionalAvailableBandwidthDescriptorSubTLV uabwSTLV = new UndirectionalAvailableBandwidthDescriptorSubTLV();
-				uabwSTLV.setAvailableBw(3);
+				uabwSTLV.setAvailableBw(3.0f);
 				linkNLRI.setUndirectionalAvailableBwTLV(uabwSTLV);
 				
 				UndirectionalUtilizedBandwidthDescriptorSubTLV uubwSTLV = new UndirectionalUtilizedBandwidthDescriptorSubTLV();
-				uubwSTLV.setUtilizedBw(4);
+				uubwSTLV.setUtilizedBw(4.0f);
 				linkNLRI.setUndirectionalUtilizedBwTLV(uubwSTLV);
 				
 				MinMaxUndirectionalLinkDelayDescriptorSubTLV muldSTLV= new MinMaxUndirectionalLinkDelayDescriptorSubTLV();

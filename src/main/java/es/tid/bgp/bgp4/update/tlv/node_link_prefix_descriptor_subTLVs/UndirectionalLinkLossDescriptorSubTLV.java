@@ -45,6 +45,7 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
    1), the link packet loss has not been measured.
 	 */
 	int linkLoss;
+	//float linkLoss;
 	public UndirectionalLinkLossDescriptorSubTLV(){
 		super();
 		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLINKLOSS_ID);
@@ -54,6 +55,11 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 	public int getLinkLoss() {
 		return linkLoss;
 	}
+	/*
+	public float getLinkLoss() {
+		return linkLoss;
+	}
+    */
 
 
 	public void setLinkLoss(int loss) {
@@ -61,6 +67,13 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 		if(loss > Math.pow(2,24))loss=(int)(Math.pow(2,24)-1);
 		this.linkLoss = loss;
 	}
+	/*
+	public void setLinkLoss(float loss) {
+		if(loss < 0.0f)loss=0.0f;
+		if(loss > Math.pow(2,24))loss=(float)(Math.pow(2,24)-1);
+		this.linkLoss = loss;
+	}
+	*/
 
 
 	public UndirectionalLinkLossDescriptorSubTLV(byte []bytes, int offset) {		
@@ -80,6 +93,14 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 		this.tlv_bytes[offset + 1] = (byte)(linkLoss >> 16 & 0xff);
 		this.tlv_bytes[offset + 2] = (byte)(linkLoss >> 8 & 0xff);
 		this.tlv_bytes[offset + 3] = (byte)(linkLoss & 0xff);
+		/*
+		int lli=Float.floatToIntBits(linkLoss);
+
+		this.tlv_bytes[offset ] = (byte)(lli >>> 24);
+		this.tlv_bytes[offset + 1] = (byte)(lli >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(lli >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(lli & 0xff);
+		*/
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=4){
@@ -90,7 +111,11 @@ public class UndirectionalLinkLossDescriptorSubTLV extends BGP4TLVFormat{
 		int offset=4;
 		this.linkLoss=0;
 		this.linkLoss= (((int)(tlv_bytes[offset+1]<<16)& (int)0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
-		
+		int lli = 0;
+		for (int k = 0; k < 4; k++) {
+			lli = (lli << 8) | (this.tlv_bytes[k+4] & 0xff);
+		}
+		//this.linkLoss=Float.intBitsToFloat(lli);
 	}
 
 	@Override

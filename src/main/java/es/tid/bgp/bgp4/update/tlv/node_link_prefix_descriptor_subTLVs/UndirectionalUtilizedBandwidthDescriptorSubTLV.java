@@ -37,22 +37,32 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVFormat{
 	
 	
-	int utilizedBw;
+	//int utilizedBw;
+	float utilizedBw;
 	public UndirectionalUtilizedBandwidthDescriptorSubTLV(){
 		super();
 		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRLUTILIZEDBW_ID);
 	}
 	
 	
+	/*
 	public int getUtilizedBw() {
+		return utilizedBw;
+	}
+	*/
+	public float getUtilizedBw() {
 		return utilizedBw;
 	}
 
 
+	/*
 	public void setUtilizedBw(int availableBw) {
 		this.utilizedBw = availableBw;
 	}
-
+	*/
+	public void setUtilizedBw(float availableBw) {
+		this.utilizedBw = availableBw;
+	}
 
 	public UndirectionalUtilizedBandwidthDescriptorSubTLV(byte []bytes, int offset) {		
 		super(bytes, offset);
@@ -65,10 +75,17 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 		this.setTlv_bytes(new byte[this.getTotalTLVLength()]);		
 		encodeHeader();
 		int offset=4;
-		this.tlv_bytes[offset] = (byte)(utilizedBw >> 24 & 0xff);
+		/*this.tlv_bytes[offset] = (byte)(utilizedBw >> 24 & 0xff);
 		this.tlv_bytes[offset + 1] = (byte)(utilizedBw >> 16 & 0xff);
 		this.tlv_bytes[offset + 2] = (byte)(utilizedBw >> 8 & 0xff);
-		this.tlv_bytes[offset + 3] = (byte)(utilizedBw & 0xff);
+		this.tlv_bytes[offset + 3] = (byte(utilizedBw & 0xff);
+		*/
+		int ubi=Float.floatToIntBits(utilizedBw);
+
+		this.tlv_bytes[offset ] = (byte)(ubi >>> 24);
+		this.tlv_bytes[offset + 1] = (byte)(ubi >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(ubi >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(ubi & 0xff);
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=4){
@@ -77,8 +94,12 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 		}
 		//System.arraycopy(this.tlv_bytes,0, utilizedBw, 0, 4);
 		int offset=4;
-		this.utilizedBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
-		
+		//this.utilizedBw=(((int)(this.tlv_bytes[offset]<<24)& (int)0xFF000000) | ((tlv_bytes[offset+1]<<16)& 0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
+		int ubi=0;
+		for (int k = 0; k < 4; k++) {
+			ubi = (ubi << 8) | (this.tlv_bytes[k+4] & 0xff);
+		}
+		this.utilizedBw=Float.intBitsToFloat(ubi);
 	}
 
 	@Override
@@ -91,7 +112,7 @@ public class UndirectionalUtilizedBandwidthDescriptorSubTLV extends BGP4TLVForma
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + utilizedBw;
+		result = prime * result + (int)utilizedBw;
 		return result;
 	}
 

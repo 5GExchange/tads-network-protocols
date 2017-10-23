@@ -31,6 +31,7 @@ This sub-TLV advertises the average link delay variation between two
  */
 public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 	int delayVar;
+	//float delayVar;
 	public UndirectionalDelayVariationDescriptorSubTLV(){
 		super();
 		this.setTLVType(LinkDescriptorSubTLVTypes.LINK_DESCRIPTOR_SUB_TLV_TYPE_UNDIRDELAYVAR_ID);
@@ -40,8 +41,17 @@ public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 	public int getDelayVar() {
 		return delayVar;
 	}
-
-
+	/*
+	public float getDelayVar() {
+		return delayVar;
+	}
+	*/
+	/*public void setDelayVar(float delay) {
+		if(delay < 0.0f) delay=0.0f;
+		if(delay > 16777215.0f)delay=16777215.0f;
+		this.delayVar = delay;
+	}
+	*/
 	public void setDelayVar(int delay) {
 		if(delay < 0)delay=0;
 		if(delay > 16777215)delay=16777215;
@@ -66,6 +76,13 @@ public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 		this.tlv_bytes[offset + 1] = (byte)(delayVar >> 16 & 0xff);
 		this.tlv_bytes[offset + 2] = (byte)(delayVar >> 8 & 0xff);
 		this.tlv_bytes[offset + 3] = (byte)(delayVar & 0xff);
+		/*
+		int dvi=Float.floatToIntBits(delayVar);
+
+		this.tlv_bytes[offset ] = (byte)(dvi >>> 24);
+		this.tlv_bytes[offset + 1] = (byte)(dvi >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(dvi >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(dvi & 0xff);*/
 	}
 	public void decode(){
 		if (this.getTLVValueLength()!=4){
@@ -76,7 +93,11 @@ public class UndirectionalDelayVariationDescriptorSubTLV extends BGP4TLVFormat{
 		int offset=4;
 		this.delayVar=0;
 		this.delayVar= (((int)(tlv_bytes[offset+1]<<16)& (int)0xFF0000) |((tlv_bytes[offset+2]<<8)& 0xFF00) |  (tlv_bytes[offset+3] & 0xFF) );
-		
+		int dvi = 0;
+		for (int k = 0; k < 4; k++) {
+			dvi = (dvi << 8) | (this.tlv_bytes[k+4] & 0xff);
+		}
+		//this.delayVar=Float.intBitsToFloat(dvi);
 	}
 
 	@Override
