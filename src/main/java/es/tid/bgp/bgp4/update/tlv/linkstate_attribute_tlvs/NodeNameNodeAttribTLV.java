@@ -50,6 +50,12 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 	}
 	
 	public String toString(){
-		return "NODE NAME [name=" +this.getName().toString() + "]";
+		if (this!=null){
+			if (this.getName()!= null)
+				return "NODE NAME [name=" +this.getName().toString() + "]";
+
+		}
+		return "";
 	}
+
 }
