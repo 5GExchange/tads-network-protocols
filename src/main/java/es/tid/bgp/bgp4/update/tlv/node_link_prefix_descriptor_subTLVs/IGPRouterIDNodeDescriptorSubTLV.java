@@ -1,5 +1,6 @@
 package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
+import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
@@ -25,10 +26,13 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	private Inet4Address ipv4Address_ospf = null;
 	private Inet4Address ipv4Address_ospf_dr_address = null;
 	private int ISIS_ISO_NODE_ID;
+	private BigInteger newISIS_ISO_NODE_ID;
 	private byte[] address = null;
 	private int PSN_IDENT;
-	
-	
+	//private String charPSN_IDENT;
+
+
+
 
 	public IGPRouterIDNodeDescriptorSubTLV() {
 		super();
@@ -62,18 +66,34 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			address=new byte[6]; 
 
 			System.arraycopy(this.subtlv_bytes,offset, address, 0, 6);
-			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);	
+			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
+			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF)<<40)*10000000000L)+
+					         		 + (((this.subtlv_bytes[offset+1]&0xF0)<<32)*1000000000)   +(((this.subtlv_bytes[offset+1]&0xF)<<32)*100000000)+
+									 + (((this.subtlv_bytes[offset+2]&0xF0)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xF)<<24)*1000000)+
+									 + (((this.subtlv_bytes[offset+3]&0xF0)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xF)<<16)*10000)
+							 		 +  (((this.subtlv_bytes[offset+4]&0xF0)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xF)<<8)*100)
+									 +       ((this.subtlv_bytes[offset+5]&0xF0)*10)           +   (this.subtlv_bytes[offset+5]&0xF));
 			break;
 			
 		case 7:
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_IS_IS_PSEUDO);
 			
 
-			address=new byte[7]; 
+			address=new byte[6];
+			byte[] psn=new byte[1];
+			System.arraycopy(this.subtlv_bytes,offset, address, 0, 6);
+			System.arraycopy(this.subtlv_bytes,offset+6, psn, 0, 1);
 
-			System.arraycopy(this.subtlv_bytes,offset, address, 0, 7);
 			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
 			this.PSN_IDENT = this.subtlv_bytes[offset+6]&0xFF;
+			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF)<<40)*10000000000L)+
+					+ (((this.subtlv_bytes[offset+1]&0xF0)<<32)*1000000000L)   +(((this.subtlv_bytes[offset+1]&0xF)<<32)*100000000)+
+					+ (((this.subtlv_bytes[offset+2]&0xF0)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xF)<<24)*1000000)+
+					+ (((this.subtlv_bytes[offset+3]&0xF0)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xF)<<16)*10000)
+					+  (((this.subtlv_bytes[offset+4]&0xF0)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xF)<<8)*100)
+					+       ((this.subtlv_bytes[offset+5]&0xF0)*10)           +   (this.subtlv_bytes[offset+5]&0xF));
+			//this.charPSN_IDENT=new String(psn);
+			//this.charPSN_IDENT=new String(psn);
 			break;
 		
 		case 8:
@@ -157,6 +177,15 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		this.ipv4Address_ospf_dr_address = ipv4Address_ospf_dr_address;
 	}
 
+	public BigInteger getcharISIS_ISO_NODE_ID() {
+		return newISIS_ISO_NODE_ID;
+	}
+
+	public void setcharISIS_ISO_NODE_ID(long xx) {
+		newISIS_ISO_NODE_ID = BigInteger.valueOf(xx);
+	}
+
+
 	public int getISIS_ISO_NODE_ID() {
 		return ISIS_ISO_NODE_ID;
 	}
@@ -172,7 +201,9 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	public void setPSN_IDENT(int pSN_IDENT) {
 		PSN_IDENT = pSN_IDENT;
 	}
-	
+
+
+
 	public String toString() {
 		int length=this.getSubTLVValueLength();
 		switch(length){
@@ -181,10 +212,11 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			+ this.getIpv4AddressOSPF() + "]";
 		case 6:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ISO_NODE_ID="
-			+ this.getISIS_ISO_NODE_ID() + "]";
+			+ this.getISIS_ISO_NODE_ID() + " charISO_NODE_ID="+ this.getcharISIS_ISO_NODE_ID()+" ]";
 		case 7:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ISO_NODE_ID_DESIGNATED_ROUTER="
-			+ this.getISIS_ISO_NODE_ID() + "PSN_IDENT" +this.getPSN_IDENT()+"]";
+			+ this.getISIS_ISO_NODE_ID() + " PSN_IDENT " +this.getPSN_IDENT()+"/n" +
+					" charISO_NODE_ID="+ this.getcharISIS_ISO_NODE_ID()+" ]";
 		case 8:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_PSEUDO="
 			+ this.getIpv4AddressOSPF() + "IPv4 address of DRouter Interface"+ipv4Address_ospf_dr_address+"]";
