@@ -67,12 +67,12 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 			System.arraycopy(this.subtlv_bytes,offset, address, 0, 6);
 			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
-			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF)<<40)*10000000000L)+
-					         		 + (((this.subtlv_bytes[offset+1]&0xF0)<<32)*1000000000)   +(((this.subtlv_bytes[offset+1]&0xF)<<32)*100000000)+
-									 + (((this.subtlv_bytes[offset+2]&0xF0)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xF)<<24)*1000000)+
-									 + (((this.subtlv_bytes[offset+3]&0xF0)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xF)<<16)*10000)
-							 		 +  (((this.subtlv_bytes[offset+4]&0xF0)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xF)<<8)*100)
-									 +       ((this.subtlv_bytes[offset+5]&0xF0)*10)           +   (this.subtlv_bytes[offset+5]&0xF));
+			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xFF)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xFF)<<40)*10000000000L)+
+					         		 + (((this.subtlv_bytes[offset+1]&0xFF)<<32)*1000000000)   +(((this.subtlv_bytes[offset+1]&0xFF)<<32)*100000000)+
+									 + (((this.subtlv_bytes[offset+2]&0xFF)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xFF)<<24)*1000000)+
+									 + (((this.subtlv_bytes[offset+3]&0xFF)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xFF)<<16)*10000)
+							 		 +  (((this.subtlv_bytes[offset+4]&0xFF)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xFF)<<8)*100)
+									 +       ((this.subtlv_bytes[offset+5]&0xFF)*10)           +   (this.subtlv_bytes[offset+5]&0xFF));
 			break;
 			
 		case 7:
@@ -86,12 +86,12 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
 			this.PSN_IDENT = this.subtlv_bytes[offset+6]&0xFF;
-			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF)<<40)*10000000000L)+
-					+ (((this.subtlv_bytes[offset+1]&0xF0)<<32)*1000000000L)   +(((this.subtlv_bytes[offset+1]&0xF)<<32)*100000000)+
-					+ (((this.subtlv_bytes[offset+2]&0xF0)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xF)<<24)*1000000)+
-					+ (((this.subtlv_bytes[offset+3]&0xF0)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xF)<<16)*10000)
-					+  (((this.subtlv_bytes[offset+4]&0xF0)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xF)<<8)*100)
-					+       ((this.subtlv_bytes[offset+5]&0xF0)*10)           +   (this.subtlv_bytes[offset+5]&0xF));
+			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<4)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF))*10000000000L)+
+					+ (((this.subtlv_bytes[offset+1]&0xF0)<<4)*1000000000L)   +(((this.subtlv_bytes[offset+1]&0xF))*100000000)+
+					+ (((this.subtlv_bytes[offset+2]&0xF0)<<4)*10000000)      +((this.subtlv_bytes[offset+2]&0xF)*1000000)+
+					+ (((this.subtlv_bytes[offset+3]&0xF0)<<4)*100000)        +((this.subtlv_bytes[offset+3]&0xF)*10000)
+					+  (((this.subtlv_bytes[offset+4]&0xF0)<<4)*1000)         + ((this.subtlv_bytes[offset+4]&0xF)*100)
+					+  (((this.subtlv_bytes[offset+5]&0xF0)<<4)*10)           +  (this.subtlv_bytes[offset+5]&0xF));
 			//this.charPSN_IDENT=new String(psn);
 			//this.charPSN_IDENT=new String(psn);
 			break;
