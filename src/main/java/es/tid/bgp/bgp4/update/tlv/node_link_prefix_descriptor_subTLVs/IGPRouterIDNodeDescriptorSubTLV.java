@@ -66,18 +66,19 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			address=new byte[6]; 
 
 			System.arraycopy(this.subtlv_bytes,offset, address, 0, 6);
+
+			/*int address  = addr[3] & 0xFF;
+			address |= ((addr[2] << 8) & 0xFF00);
+			address |= ((addr[1] << 16) & 0xFF0000);
+			address |= ((addr[0] << 24) & 0xFF000000);
+
+			*/
 			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
-			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xFF)<<40)*100000000000L) +  (((this.subtlv_bytes[offset]&0xFF)<<40)*10000000000L)+
-					         		 + (((this.subtlv_bytes[offset+1]&0xFF)<<32)*1000000000)   +(((this.subtlv_bytes[offset+1]&0xFF)<<32)*100000000)+
-									 + (((this.subtlv_bytes[offset+2]&0xFF)<<24)*10000000)     +(((this.subtlv_bytes[offset+2]&0xFF)<<24)*1000000)+
-									 + (((this.subtlv_bytes[offset+3]&0xFF)<<16)*100000)       +(((this.subtlv_bytes[offset+3]&0xFF)<<16)*10000)
-							 		 +  (((this.subtlv_bytes[offset+4]&0xFF)<<8)*1000)         + (((this.subtlv_bytes[offset+4]&0xFF)<<8)*100)
-									 +       ((this.subtlv_bytes[offset+5]&0xFF)*10)           +   (this.subtlv_bytes[offset+5]&0xFF));
 			break;
 			
 		case 7:
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_IS_IS_PSEUDO);
-			
+
 
 			address=new byte[6];
 			byte[] psn=new byte[1];
@@ -86,12 +87,6 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
 			this.PSN_IDENT = this.subtlv_bytes[offset+6]&0xFF;
-			this.newISIS_ISO_NODE_ID= BigInteger.valueOf((((this.subtlv_bytes[offset]&0xF0)<<4)*100000000000L) +  (((this.subtlv_bytes[offset]&0xF))*10000000000L)+
-					+ (((this.subtlv_bytes[offset+1]&0xF0)<<4)*1000000000L)   +(((this.subtlv_bytes[offset+1]&0xF))*100000000)+
-					+ (((this.subtlv_bytes[offset+2]&0xF0)<<4)*10000000)      +((this.subtlv_bytes[offset+2]&0xF)*1000000)+
-					+ (((this.subtlv_bytes[offset+3]&0xF0)<<4)*100000)        +((this.subtlv_bytes[offset+3]&0xF)*10000)
-					+  (((this.subtlv_bytes[offset+4]&0xF0)<<4)*1000)         + ((this.subtlv_bytes[offset+4]&0xF)*100)
-					+  (((this.subtlv_bytes[offset+5]&0xF0)<<4)*10)           +  (this.subtlv_bytes[offset+5]&0xF));
 			//this.charPSN_IDENT=new String(psn);
 			//this.charPSN_IDENT=new String(psn);
 			break;
@@ -129,15 +124,51 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		case IGP_ROUTER_ID_TYPE_OSPF_NON_PSEUDO:
 			log.debug("Encoding IGP Node ID Type: OSPF NON PSEUDO");
 			int length = 4;
-			this.setSubTLVValueLength(length);		
+			this.setSubTLVValueLength(length);
 			this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 			encodeHeader();
 			int offset = 4;
 			try{
-			System.arraycopy(this.getIpv4AddressOSPF().getAddress(), 0, this.subtlv_bytes, offset, 4);
+				System.arraycopy(this.getIpv4AddressOSPF().getAddress(), 0, this.subtlv_bytes, offset, 4);
 			}catch(Exception e){
 				e.printStackTrace();
 			}
+			break;
+		case IGP_ROUTER_ID_TYPE_IS_IS_PSEUDO:
+			log.debug("Encoding IGP Node ID Type: ISIS PSEUDO");
+			length = 7;
+			this.setSubTLVValueLength(length);
+			this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
+			encodeHeader();
+			offset = 4;
+			byte[] addr = new byte[7];
+
+			addr[0] = (byte) ((this.ISIS_ISO_NODE_ID >>> 40) & 0xFF);
+			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID >>> 32) & 0xFF);
+			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID >>> 24) & 0xFF);
+			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID >>> 16)& 0xFF);
+			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID >>> 8) & 0xFF);
+			addr[5] = (byte) (this.ISIS_ISO_NODE_ID & 0xFF);
+			addr[6] = (byte) (this.PSN_IDENT & 0xFF);
+
+			System.arraycopy(addr, 0, this.subtlv_bytes, offset, 7);
+			break;
+		case IGP_ROUTER_ID_TYPE_IS_IS_NON_PSEUDO:
+			log.debug("Encoding IGP Node ID Type: ISIS NON PSEUDO");
+			length = 6;
+			this.setSubTLVValueLength(length);
+			this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
+			encodeHeader();
+			offset = 4;
+			addr = new byte[6];
+
+			addr[0] = (byte) ((this.ISIS_ISO_NODE_ID >>> 40) & 0xFF);
+			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID >>> 32) & 0xFF);
+			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID >>> 24) & 0xFF);
+			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID >>> 16)& 0xFF);
+			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID >>> 8) & 0xFF);
+			addr[5] = (byte) (this.ISIS_ISO_NODE_ID & 0xFF);
+			System.arraycopy(addr, 0, this.subtlv_bytes, offset, 6);
 			break;
 		default:
 			log.error("Please set the type code");
