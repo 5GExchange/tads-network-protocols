@@ -252,7 +252,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_PSEUDO="
 			+ this.getIpv4AddressOSPF() + "IPv4 address of DRouter Interface"+ipv4Address_ospf_dr_address+"]";
 		default:
-			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + "]";
+			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + "#############################################]";
 		}
 	}
 
