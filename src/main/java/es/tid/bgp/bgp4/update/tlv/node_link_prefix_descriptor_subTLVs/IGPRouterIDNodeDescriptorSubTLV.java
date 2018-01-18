@@ -21,7 +21,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	public static final int IGP_ROUTER_ID_TYPE_OSPF_PSEUDO=4;
 
 	
-	private int igp_router_id_type;//initialized to 2--> rest not implemented yet
+	private int igp_router_id_type;
 	
 	private Inet4Address ipv4Address_ospf = null;
 	private Inet4Address ipv4Address_ospf_dr_address = null;
@@ -206,16 +206,19 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	public void setIpv4Address_ospf_dr_address(
 			Inet4Address ipv4Address_ospf_dr_address) {
 		this.ipv4Address_ospf_dr_address = ipv4Address_ospf_dr_address;
+		this.setSubTLVValueLength(4);
 	}
 
+	/*
 	public BigInteger getcharISIS_ISO_NODE_ID() {
 		return newISIS_ISO_NODE_ID;
 	}
 
+
 	public void setcharISIS_ISO_NODE_ID(long xx) {
 		newISIS_ISO_NODE_ID = BigInteger.valueOf(xx);
 	}
-
+    */
 
 	public int getISIS_ISO_NODE_ID() {
 		return ISIS_ISO_NODE_ID;
@@ -223,6 +226,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 	public void setISIS_ISO_NODE_ID(int iSIS_ISO_NODE_ID) {
 		ISIS_ISO_NODE_ID = iSIS_ISO_NODE_ID;
+		this.setSubTLVValueLength(6);
 	}
 
 	public int getPSN_IDENT() {
@@ -231,28 +235,29 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 	public void setPSN_IDENT(int pSN_IDENT) {
 		PSN_IDENT = pSN_IDENT;
+		this.setSubTLVValueLength(7);
 	}
 
 
 
 	public String toString() {
 		int length=this.getSubTLVValueLength();
+		System.out.println("xxxxxxxxxxxxxxxxxxxxThe lenght is: "+String.valueOf(length));
 		switch(length){
 		case 4:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_NON_PSEUDO="
 			+ this.getIpv4AddressOSPF() + "]";
 		case 6:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ISO_NODE_ID="
-			+ this.getISIS_ISO_NODE_ID() + " charISO_NODE_ID="+ this.getcharISIS_ISO_NODE_ID()+" ]";
+			+ this.getISIS_ISO_NODE_ID() + " ]";
 		case 7:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ISO_NODE_ID_DESIGNATED_ROUTER="
-			+ this.getISIS_ISO_NODE_ID() + " PSN_IDENT " +this.getPSN_IDENT()+"/n" +
-					" charISO_NODE_ID="+ this.getcharISIS_ISO_NODE_ID()+" ]";
+			+ this.getISIS_ISO_NODE_ID() + " PSN_IDENT " +this.getPSN_IDENT()+"]";
 		case 8:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_PSEUDO="
 			+ this.getIpv4AddressOSPF() + "IPv4 address of DRouter Interface"+ipv4Address_ospf_dr_address+"]";
 		default:
-			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + "#############################################]";
+			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + "#######]; with length->"+ String.valueOf(length);
 		}
 	}
 
