@@ -242,7 +242,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 
 	public String toString() {
 		int length=this.getSubTLVValueLength();
-		System.out.println("xxxxxxxxxxxxxxxxxxxxThe lenght is: "+String.valueOf(length));
+		//System.out.println("xxxxxxxxxxxxxxxxxxxxThe lenght is: "+String.valueOf(length));
 		switch(length){
 		case 4:
 			return "IGP_ROUTER_ID [type=" + this.getIGP_router_id_type() + ", ID_OSPF_NON_PSEUDO="
