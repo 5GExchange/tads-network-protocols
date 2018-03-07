@@ -20,9 +20,9 @@ public class LOCAL_PREF_Attribute extends PathAttribute{
 	public LOCAL_PREF_Attribute(){
 		super();
 		this.typeCode = PathAttributesTypeCode.PATH_ATTRIBUTE_TYPECODE_LOCAL_PREF;
-		this.optionalBit = false;
+		this.optionalBit = true;
 		this.transitiveBit=false;
-		this.partialBit=true;
+		this.partialBit=false;
 		this.extendedLengthBit=false;
 	}
 	public LOCAL_PREF_Attribute(byte []bytes, int offset){
@@ -35,10 +35,10 @@ public class LOCAL_PREF_Attribute extends PathAttribute{
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];
 		encodeHeader();
-		this.bytes[6]=(byte)(preference_value>>>24 & 0xFF);
-		this.bytes[5]=(byte)(preference_value >>> 16 & 0xFF);
-		this.bytes[4]=(byte)(preference_value >>>8 & 0xFF);
-		this.bytes[3]=(byte)(preference_value & 0xFF);
+		this.bytes[3]=(byte)(preference_value>>>24 & 0xFF);
+		this.bytes[4]=(byte)(preference_value >>> 16 & 0xFF);
+		this.bytes[5]=(byte)(preference_value >>>8 & 0xFF);
+		this.bytes[6]=(byte)(preference_value & 0xFF);
 
 	}
 	public void decode(byte []bytes, int offset){
