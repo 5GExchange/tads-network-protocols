@@ -390,7 +390,6 @@ public class LinkStateAttribute  extends PathAttribute{
 
 		if (metricTLV!=null){
 			System.arraycopy(metricTLV.getTlv_bytes(),0, this.bytes,offset, metricTLV.getTotalTLVLength());
-			System.out.println("xxxxxxxxxxxxxxxxxxx IGP metric");
 			offset=offset+metricTLV.getTotalTLVLength();
 		}
 
@@ -416,7 +415,6 @@ public class LinkStateAttribute  extends PathAttribute{
 
 		if(dTEMetricTLV!=null){
 			System.arraycopy(dTEMetricTLV.getTlv_bytes(),0, this.bytes,offset, dTEMetricTLV.getTotalTLVLength());
-			System.out.println("xxxxxxxxxxxxxxxxxxx Andrea default TE metric");
 			offset=offset+dTEMetricTLV.getTotalTLVLength();
 
 		}

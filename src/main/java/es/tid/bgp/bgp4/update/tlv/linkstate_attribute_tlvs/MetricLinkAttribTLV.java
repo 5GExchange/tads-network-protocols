@@ -82,7 +82,7 @@ public class MetricLinkAttribTLV extends BGP4TLVFormat{
 	
 	public void decode(){
 		int offset = 4;
-		System.out.println("Metric type: "+ String.valueOf(metric_type));
+		//System.out.println("Metric type: "+ String.valueOf(metric_type));
 		switch(metric_type){
 		case METRIC_TYPE_OSPF:
 			setMetric((this.tlv_bytes[offset]&0xFF));
@@ -116,7 +116,6 @@ public class MetricLinkAttribTLV extends BGP4TLVFormat{
 	}
 	
 	public String toString(){
-		System.out.println("Metric type: "+ String.valueOf(metric_type));
 		switch(metric_type){
 			case METRIC_TYPE_OSPF:
 				return "METRIC [type=" + this.getMetric_type() + ", OSPF METRIC="+ this.getMetric() + "]";

@@ -58,7 +58,7 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 			if (this.name==null){
 				this.name= new byte[nameb.length];
 			}
-			System.out.println("len di name è: "+String.valueOf(nameb.length));
+			//System.out.println("len di name è: "+String.valueOf(nameb.length));
 	    	System.arraycopy(nameb,0, this.name, 0, nameb.length);
 		}
 	}
