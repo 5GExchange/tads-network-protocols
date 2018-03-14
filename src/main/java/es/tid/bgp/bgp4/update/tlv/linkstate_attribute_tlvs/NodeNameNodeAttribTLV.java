@@ -15,19 +15,16 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 		super(bytes,offset);		
 		decode();
 	}
-	
+
 	@Override
 	public void encode() {
-		int len=4;// The four bytes of the header plus the 4 first bytes)
-		len = len + 4 +name.length;
-		this.tlv_bytes=new byte[len];
+		int len= name.length;
+		this.setTLVValueLength(len);
+		//this.setTlv_bytes(new byte[this.getTotalTLVLength()]);
+		this.tlv_bytes=new byte[len+4];
 		this.encodeHeader();
-		int offset = 4;
-		for(int i=0;i<name.length;i++){
-			this.tlv_bytes[offset]=name[i];
-			offset++;
-		}
-		
+		System.arraycopy(name,0, this.tlv_bytes, 4, name.length);
+
 	}
 	
 	public void decode(){
@@ -51,9 +48,21 @@ public class NodeNameNodeAttribTLV extends BGP4TLVFormat{
 	    for (int i = 0; i < c.length; i++)
 	      b[i] = (byte)(c[i] & 0x007F);
 
-	    System.arraycopy(b,0, name, 0, b.length);
+	    System.arraycopy(b,0, this.name, 0, b.length);
 	}
-	
+
+
+	public void setNameb(byte[] nameb)
+	{
+		if ((nameb!=null)&&(nameb.length>0)){
+			if (this.name==null){
+				this.name= new byte[nameb.length];
+			}
+			System.out.println("len di name è: "+String.valueOf(nameb.length));
+	    	System.arraycopy(nameb,0, this.name, 0, nameb.length);
+		}
+	}
+
 	public byte[] getName(){
 		return name;
 	}

@@ -31,7 +31,8 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
  */
 public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
 
-	private long linkMetric;
+	//private long linkMetric;
+	private int linkMetric;
 	
 	public DefaultTEMetricLinkAttribTLV(){
 		super();
@@ -46,38 +47,47 @@ public class DefaultTEMetricLinkAttribTLV extends BGP4TLVFormat {
 	
 	@Override
 	public void encode() {///preguntar a oscar como lo ha hecho
-		this.setTLVValueLength(3);
+		this.setTLVValueLength(4);
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
 		encodeHeader();
 		int offset = 4;		
-		this.tlv_bytes[offset] = (byte)(linkMetric >> 16 & 0xff);
-		this.tlv_bytes[offset + 1] = (byte)(linkMetric >> 8 & 0xff);
-		this.tlv_bytes[offset + 2] = (byte)(linkMetric >> 0 & 0xff);
-		//this.tlv_bytes[offset + 3] = (byte)(linkMetric & 0xff);
+		this.tlv_bytes[offset] = (byte)(linkMetric >> 24 & 0xff);
+		this.tlv_bytes[offset + 1] = (byte)(linkMetric >> 16 & 0xff);
+		this.tlv_bytes[offset + 2] = (byte)(linkMetric >> 8 & 0xff);
+		this.tlv_bytes[offset + 3] = (byte)(linkMetric & 0xff);
 
 	}
-	
+
+
+
+
 	protected void decode(){		//idem
 		linkMetric=0;
-			/**for (int k = 0; k < 4; k++) {
-				linkMetric = (linkMetric << 8) | ((long)tlv_bytes[k+4] & (long)0xff);
-			}*/
-			
-			for (int k = 0; k < 3; k++) {
-				linkMetric = (linkMetric << 8) | ((long)tlv_bytes[k+4] & (long)0xff);
-			}	
+		int offset = 4;
+		setLinkMetric(((this.tlv_bytes[offset]&0xFF)<<24) |
+				((this.tlv_bytes[offset+1]&0xFF)<<16) |
+				((this.tlv_bytes[offset+2]&0xFF)<<8) |
+				((this.tlv_bytes[offset+3]&0xFF)));
+		/**for (int k = 0; k < 4; k++) {
+			linkMetric = (linkMetric << 8) | ((long)tlv_bytes[k+4] & (long)0xff);
+
+		 }
+
+		 for (int k = 0; k < 3; k++) {
+			linkMetric = (linkMetric << 8) | ((int)tlv_bytes[k+4] & (int)0xff);
+		}*/
 	}
 
-	public long getLinkMetric() {
+	public int getLinkMetric() {
 		return linkMetric;
 	}
 
-	public void setLinkMetric(long linkMetric) {
+	public void setLinkMetric(int linkMetric) {
 		this.linkMetric = linkMetric;
 	}
 
 	public String toString() {
-		return "TrafficEngineeringMetric [linkMetric=" + linkMetric + "]";
+		return "DEFAULT TE METRIC [linkMetric=" + linkMetric + "]";
 	}
 
 	

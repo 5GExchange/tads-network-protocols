@@ -163,11 +163,12 @@ public class LinkStateAttribute  extends PathAttribute{
 	MaxReservableBandwidthLinkAttribTLV maxReservableBandwidthTLV; 
 	UnreservedBandwidthLinkAttribTLV unreservedBandwidthTLV;
 	LinkProtectionTypeLinkAttribTLV linkProtectionTLV;
-	MetricLinkAttribTLV metricTLV;
+
 	AvailableLabels availableLabels;//Añadida por nosotros
 	IPv4RouterIDLocalNodeLinkAttribTLV IPv4RouterIDLocalNodeLATLV;
 	IPv4RouterIDRemoteNodeLinkAttribTLV IPv4RouterIDRemoteNodeLATLV;
-	DefaultTEMetricLinkAttribTLV TEMetricTLV;
+	DefaultTEMetricLinkAttribTLV dTEMetricTLV;
+	MetricLinkAttribTLV metricTLV;
 	//********** RUBEN *************
 	SharedRiskLinkGroupAttribTLV SharedRiskLinkGroupATLV;
 	TransceiverClassAndAppAttribTLV TransceiverClassAndAppATLV;
@@ -253,9 +254,9 @@ public class LinkStateAttribute  extends PathAttribute{
 			IPv4RouterIDRemoteNodeLATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength();
 		}
-		if(TEMetricTLV!=null){
-			TEMetricTLV.encode();
-			pathAttributeLength=pathAttributeLength+TEMetricTLV.getTotalTLVLength();
+		if(dTEMetricTLV!=null){
+			dTEMetricTLV.encode();
+			pathAttributeLength=pathAttributeLength+dTEMetricTLV.getTotalTLVLength();
 		}
 		//********** RUBEN *************
 		if(SharedRiskLinkGroupATLV!=null){
@@ -389,6 +390,7 @@ public class LinkStateAttribute  extends PathAttribute{
 
 		if (metricTLV!=null){
 			System.arraycopy(metricTLV.getTlv_bytes(),0, this.bytes,offset, metricTLV.getTotalTLVLength());
+			System.out.println("xxxxxxxxxxxxxxxxxxx IGP metric");
 			offset=offset+metricTLV.getTotalTLVLength();
 		}
 
@@ -412,9 +414,11 @@ public class LinkStateAttribute  extends PathAttribute{
 			offset=offset+IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength();
 		}
 
-		if(TEMetricTLV!=null){
-			System.arraycopy(TEMetricTLV.getTlv_bytes(),0, this.bytes,offset, TEMetricTLV.getTotalTLVLength());
-			offset=offset+TEMetricTLV.getTotalTLVLength();
+		if(dTEMetricTLV!=null){
+			System.arraycopy(dTEMetricTLV.getTlv_bytes(),0, this.bytes,offset, dTEMetricTLV.getTotalTLVLength());
+			System.out.println("xxxxxxxxxxxxxxxxxxx Andrea default TE metric");
+			offset=offset+dTEMetricTLV.getTotalTLVLength();
+
 		}
 
 		//********** RUBEN *************
@@ -445,6 +449,7 @@ public class LinkStateAttribute  extends PathAttribute{
 		}
 
 		if(nodeNameTLV!=null){
+			//System.out.println("nodeNameTLV encoding LS len is "+String.valueOf(nodeNameTLV.getTLVValueLength()));
 			System.arraycopy(nodeNameTLV.getTlv_bytes(),0, this.bytes,offset, nodeNameTLV.getTotalTLVLength());
 			offset=offset+nodeNameTLV.getTotalTLVLength();
 		}
@@ -550,7 +555,7 @@ public class LinkStateAttribute  extends PathAttribute{
 				this.IPv4RouterIDRemoteNodeLATLV=new IPv4RouterIDRemoteNodeLinkAttribTLV(this.bytes, offset);
 				break;
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_TE_DEFAULT_METRIC:
-				this.TEMetricTLV=new DefaultTEMetricLinkAttribTLV(this.bytes, offset);
+				this.dTEMetricTLV=new DefaultTEMetricLinkAttribTLV(this.bytes, offset);
 				break;
 		    //********** RUBEN *************	
 			case LinkStateAttributeTLVTypes.LINK_ATTRIBUTE_TLV_TYPE_SHARED_RISK_LINK_GROUP:
@@ -738,10 +743,10 @@ public class LinkStateAttribute  extends PathAttribute{
 		IPv4RouterIDRemoteNodeLATLV = iPv4RouterIDRemoteNodeLATLV;
 	}
 	public DefaultTEMetricLinkAttribTLV getTEMetricTLV() {
-		return TEMetricTLV;
+		return dTEMetricTLV;
 	}
 	public void setTEMetricTLV(DefaultTEMetricLinkAttribTLV tEMetricTLV) {
-		TEMetricTLV = tEMetricTLV;
+		dTEMetricTLV = tEMetricTLV;
 	}
 	
 	//********** RUBEN *************
@@ -911,8 +916,8 @@ public class LinkStateAttribute  extends PathAttribute{
 			sb.append("\r\n");
 
 		}
-		if(TEMetricTLV!=null){
-			sb.append(TEMetricTLV.toString());
+		if(dTEMetricTLV!=null){
+			sb.append(dTEMetricTLV.toString());
 			sb.append("\r\n");
 
 		}

@@ -38,9 +38,9 @@ public class IS_IS_AreaIdentifierNodeAttribTLV extends BGP4TLVFormat{
 	public void encode() {
 		int len=4;// The four bytes of the header plus the 4 first bytes)
 		if (valid_len==4)
-			this.setTLVValueLength(len+(ipv4areaIDs.size()*valid_len));
+			this.setTLVValueLength((ipv4areaIDs.size()*valid_len));
 		else
-			this.setTLVValueLength(len+valid_len);
+			this.setTLVValueLength(valid_len);
 
 
 		this.tlv_bytes=new byte[this.getTotalTLVLength()];
@@ -81,7 +81,7 @@ public class IS_IS_AreaIdentifierNodeAttribTLV extends BGP4TLVFormat{
 		else{
 			if (length<4){
 				address=new byte[4];
-				valid_len=3;
+				valid_len=length;
 				Inet4Address idarea = null;
 				System.arraycopy(this.tlv_bytes,offset, address, (4-length), length);
 				try {
