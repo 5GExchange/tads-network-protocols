@@ -589,6 +589,7 @@ public class LinkStateAttribute  extends PathAttribute{
 				break;
 
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID:
+
 				this.areaIDTLV=new IS_IS_AreaIdentifierNodeAttribTLV(this.bytes, offset);
 				break;
 
@@ -869,7 +870,7 @@ public class LinkStateAttribute  extends PathAttribute{
 
 	@Override
 	public String toString() {
-		StringBuffer sb=new StringBuffer(1000);		
+		StringBuffer sb=new StringBuffer(10000);
 		sb.append("LINK STATE \n\t> [typeCode=" + typeCode + ", optionalBit="
 				+ optionalBit + ", transitiveBit=" + transitiveBit
 				+ ", partialBit=" + partialBit + ", extendedLengthBit="
@@ -945,8 +946,8 @@ public class LinkStateAttribute  extends PathAttribute{
 
 		}
 
-		if(nodeNameTLV!=null){
-			sb.append(nodeNameTLV.toString());
+		if(this.nodeNameTLV!=null){
+			sb.append(this.nodeNameTLV.toString());
 			sb.append("\r\n");
 
 		}

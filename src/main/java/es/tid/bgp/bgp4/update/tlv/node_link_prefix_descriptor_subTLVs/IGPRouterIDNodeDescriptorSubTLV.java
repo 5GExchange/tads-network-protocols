@@ -25,7 +25,7 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	
 	private Inet4Address ipv4Address_ospf = null;
 	private Inet4Address ipv4Address_ospf_dr_address = null;
-	private int ISIS_ISO_NODE_ID;
+	private long ISIS_ISO_NODE_ID;
 	private BigInteger newISIS_ISO_NODE_ID;
 	private byte[] address = null;
 	private int PSN_IDENT;
@@ -43,6 +43,21 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 		super(bytes, offset);
 		decode();
 	}
+
+	/*
+	private static int decode(byte[] bi) {
+  return bi[3] & 0xFF | (bi[2] & 0xFF) << 8 |
+         (bi[1] & 0xFF) << 16 | (bi[0] & 0xFF) << 24;
+}
+private static byte[] encode(int i) {
+  return new byte[] { (byte) (i >>> 24), (byte) ((i << 8) >>> 24),
+                      (byte) ((i << 16) >>> 24), (byte) ((i << 24) >>> 24)
+  };
+}
+	 */
+
+
+
 
 	private void decode() {
 		int length = this.getSubTLVValueLength();
@@ -72,10 +87,57 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			address |= ((addr[1] << 16) & 0xFF0000);
 			address |= ((addr[0] << 24) & 0xFF000000);
 
+
+			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) |
+									((this.subtlv_bytes[offset+1]&0xFF)<<32) |
+									((this.subtlv_bytes[offset+2]&0xFF)<<24) |
+									((this.subtlv_bytes[offset+3]&0xFF)<<16)  |
+									((this.subtlv_bytes[offset+4]&0xFF)<<8)|
+									(this.subtlv_bytes[offset+5]&0xFF);
+
+			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) |
+					((this.subtlv_bytes[offset+1]&0xFF)<<32) |
+					((this.subtlv_bytes[offset+2]&0xFF)<<24) |
+					((this.subtlv_bytes[offset+3]&0xFF)<<16)  |
+					((this.subtlv_bytes[offset+4]&0xFF)<<8)|
+					(this.subtlv_bytes[offset+5]&0xFF);
+
+
+
+			public static byte[] longToBytes(long l) {
+				byte[] result = new byte[8];
+				for (int i = 7; i >= 0; i--) {
+					result[i] = (byte)(l & 0xFF);
+					l >>= 8;
+				}
+				return result;
+			}
+
+			public static long bytesToLong(byte[] b) {
+				long result = 0;
+				for (int i = 0; i < 8; i++) {
+					result <<= 8;
+					result |= (b[i] & 0xFF);
+				}
+				return result;
+			}
 			*/
-			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
+			long temp=0L;
+			for (int i = 0; i < 6; i++) {
+				temp <<= 8;
+				temp |= (this.subtlv_bytes[offset+i] & 0xFF);
+			}
+			//System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXValue of temp="+String.valueOf(temp));
+			this.ISIS_ISO_NODE_ID=temp;
+			/*this.ISIS_ISO_NODE_ID=   ((this.subtlv_bytes[offset]<<40)&0xFF0000000000) |
+					               ((this.subtlv_bytes[offset+1]<<32)&0xFF00000000) |
+								   ((this.subtlv_bytes[offset+2]<<24)&0xFF000000) |
+					               ((this.subtlv_bytes[offset+3]<<16)&0xFF0000)  |
+					               ((this.subtlv_bytes[offset+4]<<8) &0xFF00)|
+					                (this.subtlv_bytes[offset+5]&0xFF);
+			*/
 			break;
-			
+
 		case 7:
 			setIGP_router_id_type(IGP_ROUTER_ID_TYPE_IS_IS_PSEUDO);
 
@@ -84,8 +146,29 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			byte[] psn=new byte[1];
 			System.arraycopy(this.subtlv_bytes,offset, address, 0, 6);
 			System.arraycopy(this.subtlv_bytes,offset+6, psn, 0, 1);
+			temp=0L;
+			/*
+			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) |
+					                ((this.subtlv_bytes[offset+1]&0xFF)<<32) |
+					                ((this.subtlv_bytes[offset+2]&0xFF)<<24) |
+					                ((this.subtlv_bytes[offset+3]&0xFF)<<16)  |
+					                ((this.subtlv_bytes[offset+4]&0xFF)<<8)|
+					                (this.subtlv_bytes[offset+5]&0xFF);
 
-			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) | ((this.subtlv_bytes[offset+1]&0xFF)<<32) | ((this.subtlv_bytes[offset+2]&0xFF)<<24) |  (this.subtlv_bytes[offset+3]&0xFF<<16)  |  (this.subtlv_bytes[offset+4]&0xFF<<8)|  (this.subtlv_bytes[offset+5]&0xFF);
+
+			this.ISIS_ISO_NODE_ID= ((this.subtlv_bytes[offset]&0xFF)<<40) |
+					((this.subtlv_bytes[offset+1]&0xFF)<<32) |
+					((this.subtlv_bytes[offset+2]&0xFF)<<24) |
+					((this.subtlv_bytes[offset+3]&0xFF)<<16)  |
+					((this.subtlv_bytes[offset+4]&0xFF)<<8)|
+					(this.subtlv_bytes[offset+5]&0xFF);
+			*/
+			for (int i = 0; i < 6; i++) {
+				temp <<= 8;
+				temp |= (this.subtlv_bytes[offset+i] & 0xFF);
+			}
+			this.ISIS_ISO_NODE_ID=temp;
+
 			this.PSN_IDENT = this.subtlv_bytes[offset+6]&0xFF;
 			//this.charPSN_IDENT=new String(psn);
 			//this.charPSN_IDENT=new String(psn);
@@ -142,13 +225,32 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			encodeHeader();
 			offset = 4;
 			byte[] addr = new byte[7];
-
-			addr[0] = (byte) ((this.ISIS_ISO_NODE_ID >>> 40) & 0xFF);
+			long temp=this.ISIS_ISO_NODE_ID;
+			/*
+			private static byte[] encode(int i) {
+  return new byte[] { (byte) (i >>> 24), (byte) ((i << 8) >>> 24),
+                      (byte) ((i << 16) >>> 24), (byte) ((i << 24) >>> 24)
+  };
+  			addr[0] = (byte) ((this.ISIS_ISO_NODE_ID >>> 40) & 0xFF);
 			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID >>> 32) & 0xFF);
 			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID >>> 24) & 0xFF);
 			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID >>> 16)& 0xFF);
 			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID >>> 8) & 0xFF);
 			addr[5] = (byte) (this.ISIS_ISO_NODE_ID & 0xFF);
+			addr[6] = (byte) (this.PSN_IDENT & 0xFF);
+
+
+			addr[0] = (byte) (this.ISIS_ISO_NODE_ID >>> 40);
+			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID << 8)>>> 40);
+			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID <<16)>>> 40);
+			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID <<24)>>> 40);
+			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID <<32)>>> 40);
+			addr[5] = (byte) ((this.ISIS_ISO_NODE_ID << 40)>>> 40);
+			*/
+			for (int i = 6; i >= 0; i--) {
+				addr[i] = (byte)(temp & 0xFF);
+				temp >>= 8;
+			}
 			addr[6] = (byte) (this.PSN_IDENT & 0xFF);
 
 			System.arraycopy(addr, 0, this.subtlv_bytes, offset, 7);
@@ -162,12 +264,27 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 			offset = 4;
 			addr = new byte[6];
 
+			/*
 			addr[0] = (byte) ((this.ISIS_ISO_NODE_ID >>> 40) & 0xFF);
+
 			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID >>> 32) & 0xFF);
 			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID >>> 24) & 0xFF);
 			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID >>> 16)& 0xFF);
 			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID >>> 8) & 0xFF);
 			addr[5] = (byte) (this.ISIS_ISO_NODE_ID & 0xFF);
+
+			addr[0] = (byte) (this.ISIS_ISO_NODE_ID >>> 40);
+			addr[1] = (byte) ((this.ISIS_ISO_NODE_ID << 8)>>> 40);
+			addr[2] = (byte) ((this.ISIS_ISO_NODE_ID <<16)>>> 40);
+			addr[3] = (byte) ((this.ISIS_ISO_NODE_ID <<24)>>> 40);
+			addr[4] = (byte) ((this.ISIS_ISO_NODE_ID <<32)>>> 40);
+			addr[5] = (byte) ((this.ISIS_ISO_NODE_ID << 40)>>> 40);
+			*/
+			temp=this.ISIS_ISO_NODE_ID;
+			for (int i = 5; i >= 0; i--) {
+				addr[i] = (byte)(temp & 0xFF);
+				temp >>= 8;
+			}
 			System.arraycopy(addr, 0, this.subtlv_bytes, offset, 6);
 			break;
 		default:
@@ -220,11 +337,11 @@ public class IGPRouterIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV {
 	}
     */
 
-	public int getISIS_ISO_NODE_ID() {
+	public long getISIS_ISO_NODE_ID() {
 		return ISIS_ISO_NODE_ID;
 	}
 
-	public void setISIS_ISO_NODE_ID(int iSIS_ISO_NODE_ID) {
+	public void setISIS_ISO_NODE_ID(long iSIS_ISO_NODE_ID) {
 		ISIS_ISO_NODE_ID = iSIS_ISO_NODE_ID;
 		this.setSubTLVValueLength(6);
 	}
