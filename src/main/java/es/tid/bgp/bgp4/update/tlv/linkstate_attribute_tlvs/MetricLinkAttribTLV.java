@@ -23,8 +23,7 @@ public class MetricLinkAttribTLV extends BGP4TLVFormat{
 	public MetricLinkAttribTLV(byte[] bytes, int offset){
 		super(bytes,offset);
 		length = this.getTLVValueLength();
-        System.out.println("Metric type: "+ String.valueOf(length));
-		switch(length){
+        switch(length){
             case 1:
                 this.setMetric_type(METRIC_TYPE_IS_IS_SHORT);
                 break;
