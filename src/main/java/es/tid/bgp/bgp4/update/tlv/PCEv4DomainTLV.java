@@ -95,15 +95,15 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 					System.arraycopy(AS.getSubTLV_bytes(), 0, this.tlv_bytes, offset, AS.getTotalSubTLVLength());
 					offset = offset + AS.getTotalSubTLVLength();
 				}
-				else
-					System.out.println("AS is null");
+				//else
+				//	System.out.println("AS is null");
 			}
 		}
-		else
-			System.out.println("AS empty list");
+		//else
+		//	System.out.println("AS empty list");
 
 		if (AreaIDSubTLVs.size()>0){
-			System.out.println(" list len=="+String.valueOf(AreaIDSubTLVs.size()));
+			//System.out.println(" list len=="+String.valueOf(AreaIDSubTLVs.size()));
 			for (AreaIDNodeDescriptorSubTLV area: AreaIDSubTLVs) {
 				if (area!=null) {
 					area.encode();
@@ -117,14 +117,14 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 
 					offset=offset+ area.getTotalSubTLVLength();
 				}
-				else
-					System.out.println("area is null");
+				//else
+					//System.out.println("area is null");
 
 			}
 		}
-		else
-			System.out.println("areaID empty list");
-		System.out.println(this.toString());
+		//else
+		//	System.out.println("areaID empty list");
+		//System.out.println(this.toString());
 	}
 	
 	
@@ -145,7 +145,7 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID:
 					AreaIDSubTLVs.add(new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset));
-					System.out.println("Added a new area in the list");
+					//System.out.println("Added a new area in the list");
 					break;
 
 

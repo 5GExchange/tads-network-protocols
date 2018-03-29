@@ -135,7 +135,6 @@ public class PCENLRI extends LinkStateNLRI {
 					PCEv4Scope = new PCEv4ScopeTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_DOMAIN_ID:
-					System.out.println("here->"+TlvType);
 					PCEv4Domain = new PCEv4DomainTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_NEIGBOUR_ID:

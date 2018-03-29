@@ -185,13 +185,6 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 		Pre_S = bits(val, 6, 3);// Next 3-bit
 		Pre_Y = bits(val, 9, 3);// Next 3-bit
 		
-		StringBuffer sb=new StringBuffer(1000);
-
-		sb.append( "PCEv4Scope [Pre_L=" + Pre_L +
-				", Pre_R=" + Pre_R +
-				", Pre_S=" + Pre_S + ", Pre_Y=" + Pre_Y+"]");
-
-		System.out.println(sb.toString());
 	}
 
 	private static int bits(int n, int offset, int length){
