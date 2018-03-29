@@ -154,13 +154,20 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 		//byte[] value_field=new byte[1];
 
 		//System.arraycopy(this.tlv_bytes,offset, value_field, 0, 1);
+		/*
 		PCE_intraArea = (this.tlv_bytes[offset] & 0x80) == 0x80; //Leftmost bit
 		PCE_interArea = (this.tlv_bytes[offset] & 0x40) == 0x40;
 		Default_PEC_interArea_TE = (this.tlv_bytes[offset] & 0x20) == 0x20;
 		PCE_interAS_TE = (this.tlv_bytes[offset] & 0x10) == 0x10;
 		Default_PCE_interAS_TE = (this.tlv_bytes[offset] & 0x08) == 0x08;
 		Default_PCE_interlayer_TE = (this.tlv_bytes[offset] & 0x04) == 0x04;
-
+		*/
+		PCE_intraArea = (this.tlv_bytes[offset] & 0x80)==0x80; //Leftmost bit
+		PCE_interArea = (this.tlv_bytes[offset] & 0x40) == 0x40;
+		Default_PEC_interArea_TE = (this.tlv_bytes[offset] & 0x20) == 0x20;
+		PCE_interAS_TE = (this.tlv_bytes[offset] & 0x10) == 0x10;
+		Default_PCE_interAS_TE = (this.tlv_bytes[offset] & 0x08) == 0x08;
+		Default_PCE_interlayer_TE = (this.tlv_bytes[offset] & 0x04) == 0x04;
 		/*
 		 PCE_intraArea= getBit (value_field,0);
 		 PCE_interArea=getBit (value_field,1);
@@ -172,7 +179,7 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 		offset = offset + 1;
 		byte[] Preference_field = new byte[2];
 		System.arraycopy(this.tlv_bytes, offset, Preference_field, 0, 2);
-		int val = Preference_field[0] | (Preference_field[1] << 8);
+		int val = Preference_field[0]<<8 | (Preference_field[1]);
 		Pre_L = bits(val, 0, 3); //Converting the first 3-bit of Preference field to int value
 		Pre_R = bits(val, 3, 3);// Next 3-bit
 		Pre_S = bits(val, 6, 3);// Next 3-bit
@@ -182,7 +189,7 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 
 		sb.append( "PCEv4Scope [Pre_L=" + Pre_L +
 				", Pre_R=" + Pre_R +
-				", Pre_S=" + Pre_S + ", Pre_Y=" + Pre_Y);
+				", Pre_S=" + Pre_S + ", Pre_Y=" + Pre_Y+"]");
 
 		System.out.println(sb.toString());
 	}
