@@ -132,27 +132,28 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 		int offset=0;
 
 		while (!fin) {
-			int subtlvType= BGP4SubTLV.getType(tlv_bytes, offset);
-			int subtlvLength=BGP4SubTLV.getTotalSubTLVLength(tlv_bytes, offset);
-			switch(subtlvType) {
+			//int subtlvType=  BGP4SubTLV.getType(tlv_bytes, offset);
+			//int subtlvLength=BGP4SubTLV.getTotalSubTLVLength(tlv_bytes, offset);
+			int tlvType=  BGP4TLVFormat.getType(tlv_bytes, offset);
+			int tlvLength=BGP4TLVFormat.getTotalTLVLength(tlv_bytes, offset);
+			switch(tlvType) {
 
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AUTONOMOUS_SYSTEM:
 					ASSubTLVs.add(new AutonomousSystemNodeDescriptorSubTLV(this.tlv_bytes, offset));
 					break;
 
-
-
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AREA_ID:
 					AreaIDSubTLVs.add(new AreaIDNodeDescriptorSubTLV(this.tlv_bytes, offset));
+					System.out.println("Added a new area in the list");
 					break;
 
 
 
 				default:
-					log.debug("Local Node Descriptor subtlv Unknown, "+subtlvType);
+					log.debug("Local Node Descriptor subtlv Unknown, "+tlvType);
 					break;
 			}
-			offset=offset+subtlvLength;
+			offset=offset+tlvLength;
 			if (offset>=this.TLVValueLength){
 				fin=true;
 			}
