@@ -132,10 +132,10 @@ public class PCENLRI extends LinkStateNLRI {
 			int TlvLength=BGP4TLVFormat.getTotalTLVLength(this.bytes, offset);
 			switch(TlvType){
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_SCOPE:
-					PCEv4Domain = new PCEv4DomainTLV(this.bytes, offset);
+					PCEv4Scope = new PCEv4ScopeTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_DOMAIN_ID:
-					PCEv4Scope = new PCEv4ScopeTLV(this.bytes, offset);
+					PCEv4Domain = new PCEv4DomainTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_NEIGBOUR_ID:
 					PCEv4Neigbour = new PCEv4NeighboursTLV(this.bytes, offset);
