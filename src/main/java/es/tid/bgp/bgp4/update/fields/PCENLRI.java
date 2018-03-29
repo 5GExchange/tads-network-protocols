@@ -135,13 +135,14 @@ public class PCENLRI extends LinkStateNLRI {
 					PCEv4Scope = new PCEv4ScopeTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_DOMAIN_ID:
+					System.out.println("here->"+TlvType);
 					PCEv4Domain = new PCEv4DomainTLV(this.bytes, offset);
 					break;
 				case PCEDescriptorsTLVTypes.PCE_DESCRIPTORS_TLV_TYPE_NEIGBOUR_ID:
 					PCEv4Neigbour = new PCEv4NeighboursTLV(this.bytes, offset);
 					break;
 				default:
-					log.debug("Local Node Descriptor subtlv Unknown, "+TlvType);
+					System.out.println("Local Node Descriptor subtlv Unknown, "+TlvType);
 					break;
 			}
 			offset=offset+TlvLength;

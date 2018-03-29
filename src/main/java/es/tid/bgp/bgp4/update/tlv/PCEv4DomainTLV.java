@@ -130,14 +130,14 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 	
 	public void decode(){
 		boolean fin=false;
-		int offset=0;
+		int offset=4;
 
 		while (!fin) {
-			//int subtlvType=  BGP4SubTLV.getType(tlv_bytes, offset);
-			//int subtlvLength=BGP4SubTLV.getTotalSubTLVLength(tlv_bytes, offset);
-			int tlvType=  BGP4TLVFormat.getType(tlv_bytes, offset);
-			int tlvLength=BGP4TLVFormat.getTotalTLVLength(tlv_bytes, offset);
-			switch(tlvType) {
+			int subtlvType=  BGP4SubTLV.getType(tlv_bytes, offset);
+			int subtlvLength=BGP4SubTLV.getTotalSubTLVLength(tlv_bytes, offset);
+			//int tlvType=  BGP4TLVFormat.getType(tlv_bytes, offset);
+			//int tlvLength=BGP4TLVFormat.getTotalTLVLength(tlv_bytes, offset);
+			switch(subtlvType) {
 
 				case NodeDescriptorsSubTLVTypes.NODE_DESCRIPTORS_SUBTLV_TYPE_AUTONOMOUS_SYSTEM:
 					ASSubTLVs.add(new AutonomousSystemNodeDescriptorSubTLV(this.tlv_bytes, offset));
@@ -151,10 +151,10 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 
 
 				default:
-					System.out.println("Local Node Descriptor subtlv Unknown, "+tlvType);
+					System.out.println("Local Node Descriptor subtlv Unknown, "+subtlvType);
 					break;
 			}
-			offset=offset+tlvLength;
+			offset=offset+subtlvLength;
 			if (offset>=this.TLVValueLength){
 				fin=true;
 			}
