@@ -148,18 +148,18 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 
 
 
-	public void decode(){
+	public void decode() {
 		//Decoding Path Scope
-		int offset=4;//4-Bytes for Header
+		int offset = 4;//4-Bytes for Header
 		//byte[] value_field=new byte[1];
 
 		//System.arraycopy(this.tlv_bytes,offset, value_field, 0, 1);
-		PCE_intraArea=(this.tlv_bytes[offset]&0x80)==0x80; //Leftmost bit
-		PCE_interArea = (this.tlv_bytes[offset]&0x40)==0x40;
-		Default_PEC_interArea_TE =(this.tlv_bytes[offset]&0x20)==0x20;
-		PCE_interAS_TE = (this.tlv_bytes[offset]&0x10)==0x10;
-		Default_PCE_interAS_TE = (this.tlv_bytes[offset]&0x08)==0x08;
-		Default_PCE_interlayer_TE = (this.tlv_bytes[offset]&0x04)==0x04;
+		PCE_intraArea = (this.tlv_bytes[offset] & 0x80) == 0x80; //Leftmost bit
+		PCE_interArea = (this.tlv_bytes[offset] & 0x40) == 0x40;
+		Default_PEC_interArea_TE = (this.tlv_bytes[offset] & 0x20) == 0x20;
+		PCE_interAS_TE = (this.tlv_bytes[offset] & 0x10) == 0x10;
+		Default_PCE_interAS_TE = (this.tlv_bytes[offset] & 0x08) == 0x08;
+		Default_PCE_interlayer_TE = (this.tlv_bytes[offset] & 0x04) == 0x04;
 
 		/*
 		 PCE_intraArea= getBit (value_field,0);
@@ -169,21 +169,27 @@ public class PCEv4ScopeTLV extends BGP4TLVFormat{
 		 Default_PCE_interAS_TE=getBit (value_field,4);
 		 Default_PCE_interlayer_TE=getBit (value_field,5);
 		 */
-		offset=offset+1;
-		byte[] Preference_field=new byte[2];
-		System.arraycopy(this.tlv_bytes,offset, Preference_field, 0, 2);
-		int val= Preference_field[0]|(Preference_field[1]<<8);
-		Pre_L= bits(val,0, 3); //Converting the first 3-bit of Preference field to int value
-		Pre_R= bits(val,3, 3);// Next 3-bit
-		Pre_S= bits(val,6, 3);// Next 3-bit
-		Pre_Y= bits(val,9, 3);// Next 3-bit
+		offset = offset + 1;
+		byte[] Preference_field = new byte[2];
+		System.arraycopy(this.tlv_bytes, offset, Preference_field, 0, 2);
+		int val = Preference_field[0] | (Preference_field[1] << 8);
+		Pre_L = bits(val, 0, 3); //Converting the first 3-bit of Preference field to int value
+		Pre_R = bits(val, 3, 3);// Next 3-bit
+		Pre_S = bits(val, 6, 3);// Next 3-bit
+		Pre_Y = bits(val, 9, 3);// Next 3-bit
+		
+		StringBuffer sb=new StringBuffer(1000);
 
+		sb.append( "PCEv4Scope [Pre_L=" + Pre_L +
+				", Pre_R=" + Pre_R +
+				", Pre_S=" + Pre_S + ", Pre_Y=" + Pre_Y);
+
+		System.out.println(sb.toString());
 	}
 
-
 	private static int bits(int n, int offset, int length){
-		n= (n >> (16 - offset - length) & 0x07);
-		return n;
+		int m= (n >> (16 - offset - length) & 0x07);
+		return m;
 	}
 
 	public int getPre_L() {
