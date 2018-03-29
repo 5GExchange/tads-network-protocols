@@ -95,24 +95,34 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 					System.arraycopy(AS.getSubTLV_bytes(), 0, this.tlv_bytes, offset, AS.getTotalSubTLVLength());
 					offset = offset + AS.getTotalSubTLVLength();
 				}
+				else
+					System.out.println("AS is null");
 			}
 		}
-		if (AreaIDSubTLVs.size()>0){
-			for (AreaIDNodeDescriptorSubTLV Area: AreaIDSubTLVs) {
-				if ((Area!=null)) {
-					Area.encode();
-					log.info(Area.toString());
-					log.info(String.valueOf(Area.getSubTLVValueLength()));
-					log.info(this.tlv_bytes.toString());
-					log.info (String.valueOf(Area.getSubTLV_bytes()));
-					log.info (String.valueOf(Area.getSubTLVValueLength()));
-					//System.arraycopy(Area.getSubTLV_bytes(),0,tlv_bytes,offset,Area.getTotalSubTLVLength());
-					System.arraycopy(Area.getSubTLV_bytes(),0,this.tlv_bytes,offset,Area.getTotalSubTLVLength());
+		else
+			System.out.println("AS empty list");
 
-					offset=offset+ Area.getTotalSubTLVLength();
+		if (AreaIDSubTLVs.size()>0){
+			for (AreaIDNodeDescriptorSubTLV area: AreaIDSubTLVs) {
+				if ((area!=null)) {
+					area.encode();
+					//log.info(area.toString());
+					//log.info(String.valueOf(area.getSubTLVValueLength()));
+					//log.info(this.tlv_bytes.toString());
+					//log.info (String.valueOf(area.getSubTLV_bytes()));
+					//log.info (String.valueOf(area.getSubTLVValueLength()));
+					//System.arraycopy(Area.getSubTLV_bytes(),0,tlv_bytes,offset,Area.getTotalSubTLVLength());
+					System.arraycopy(area.getSubTLV_bytes(),0,this.tlv_bytes,offset,area.getTotalSubTLVLength());
+
+					offset=offset+ area.getTotalSubTLVLength();
 				}
+				else
+					System.out.println("area is null");
+
 			}
 		}
+		else
+			System.out.println("areaID empty list");
 
 	}
 	
