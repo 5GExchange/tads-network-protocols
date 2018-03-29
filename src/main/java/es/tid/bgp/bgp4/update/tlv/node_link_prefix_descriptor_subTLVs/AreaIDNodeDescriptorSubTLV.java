@@ -48,7 +48,7 @@ public class AreaIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 		this.subtlv_bytes=new byte[this.getTotalSubTLVLength()];
 		encodeHeader();
 		int offset = 4;
-		System.out.println(AREA_ID.getHostAddress());
+		//System.out.println(AREA_ID.getHostAddress());
 		System.arraycopy(AREA_ID.getAddress(), 0, this.subtlv_bytes, offset, 4);
 	}
 
