@@ -20,15 +20,23 @@ public class AreaIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 	}
 
 	private void decode() {
-		//Decoding AREA ID	
-		byte[] ip=new byte[4]; 
-		System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
-		try {
-			AREA_ID=(Inet4Address)Inet4Address.getByAddress(ip);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 	
+		//Decoding AREA ID
+		if (this.getSubTLVValueLength()!=4){
+			//throw new MalformedPCEPObjectException();
+			//FIXME: esta mal formado Que hacer
+			System.out.println("stange len");
+		}
+		else{
+			byte[] ip=new byte[4];
+			System.out.println("good len");
+			System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
+			try {
+				AREA_ID=(Inet4Address)Inet4Address.getByAddress(ip);
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 

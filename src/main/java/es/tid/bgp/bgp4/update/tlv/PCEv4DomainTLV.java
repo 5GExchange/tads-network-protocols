@@ -103,8 +103,9 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 			System.out.println("AS empty list");
 
 		if (AreaIDSubTLVs.size()>0){
+			System.out.println(" list len=="+String.valueOf(AreaIDSubTLVs.size()));
 			for (AreaIDNodeDescriptorSubTLV area: AreaIDSubTLVs) {
-				if ((area!=null)) {
+				if (area!=null) {
 					area.encode();
 					//log.info(area.toString());
 					//log.info(String.valueOf(area.getSubTLVValueLength()));
@@ -123,7 +124,7 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 		}
 		else
 			System.out.println("areaID empty list");
-
+		System.out.println(this.toString());
 	}
 	
 	
@@ -150,7 +151,7 @@ public class PCEv4DomainTLV extends BGP4TLVFormat{
 
 
 				default:
-					log.debug("Local Node Descriptor subtlv Unknown, "+tlvType);
+					System.out.println("Local Node Descriptor subtlv Unknown, "+tlvType);
 					break;
 			}
 			offset=offset+tlvLength;
