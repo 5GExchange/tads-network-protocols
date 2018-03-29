@@ -24,11 +24,11 @@ public class AreaIDNodeDescriptorSubTLV extends NodeDescriptorsSubTLV{
 		if (this.getSubTLVValueLength()!=4){
 			//throw new MalformedPCEPObjectException();
 			//FIXME: esta mal formado Que hacer
-			System.out.println("stange len");
+			System.out.println("stange area length");
 		}
 		else{
 			byte[] ip=new byte[4];
-			System.out.println("good len");
+			//System.out.println("good len");
 			System.arraycopy(this.subtlv_bytes,4, ip, 0, 4);
 			try {
 				AREA_ID=(Inet4Address)Inet4Address.getByAddress(ip);
