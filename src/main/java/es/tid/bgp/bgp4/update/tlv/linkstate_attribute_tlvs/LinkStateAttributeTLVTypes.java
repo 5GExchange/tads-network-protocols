@@ -93,6 +93,7 @@ public class LinkStateAttributeTLVTypes {
 	// Draft http://tools.ietf.org/html/draft-ietf-ccamp-general-constraint-encode-05#section-2.6
 	
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_NODE_FLAG_BITS = 1024;
+	public static final int NODE_ATTRIBUTE_TLV_TYPE_OPAQUE_NODE = 1025;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME = 1026;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID = 1027;
 	public static final int NODE_ATTRIBUTE_TLV_TYPE_IPv4_ROUTER_ID_OF_LOCAL_NODE = 1028;
