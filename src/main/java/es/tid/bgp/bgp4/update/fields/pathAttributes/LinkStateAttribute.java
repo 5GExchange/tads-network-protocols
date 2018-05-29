@@ -1,36 +1,15 @@
 package es.tid.bgp.bgp4.update.fields.pathAttributes;
 
 
-
 import es.tid.bgp.bgp4.update.fields.PathAttribute;
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.AdministrativeGroupLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.DefaultTEMetricLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IGPFlagBitsPrefixAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDLocalNodeNodeAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IPv4RouterIDRemoteNodeLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.IS_IS_AreaIdentifierNodeAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkProtectionTypeLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.LinkStateAttributeTLVTypes;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MaxReservableBandwidthLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MaximumLinkBandwidthLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MetricLinkAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.NodeFlagBitsNodeAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.NodeNameNodeAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.OSPFForwardingAddressPrefixAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.PrefixMetricPrefixAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.RouteTagPrefixAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SidLabelNodeAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.UnreservedBandwidthLinkAttribTLV;
-//********** RUBEN *************
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.SharedRiskLinkGroupAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.TransceiverClassAndAppAttribTLV;
-import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.MF_OTPAttribTLV;
-//******************************
+import es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs.*;
 import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.*;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.AvailableLabels;
 import es.tid.ospf.ospfv2.lsa.tlv.subtlv.MalformedOSPFSubTLVException;
+
+//********** RUBEN *************
+//******************************
 
 /**
  * Link-State Info Distribution using BGP, July 2012
@@ -178,6 +157,7 @@ public class LinkStateAttribute  extends PathAttribute{
 
 	/** NODE ATTRIBUTE TLVs */
 	NodeFlagBitsNodeAttribTLV nodeFlagBitsTLV;
+	OpaqueNodeNodeAttribTLV opaqueNodeTLV;
 	NodeNameNodeAttribTLV nodeNameTLV;
 	IS_IS_AreaIdentifierNodeAttribTLV areaIDTLV;
 	IPv4RouterIDLocalNodeNodeAttribTLV IPv4RouterIDLocalNodeNATLV;
@@ -451,6 +431,11 @@ public class LinkStateAttribute  extends PathAttribute{
 			System.arraycopy(nodeNameTLV.getTlv_bytes(),0, this.bytes,offset, nodeNameTLV.getTotalTLVLength());
 			offset=offset+nodeNameTLV.getTotalTLVLength();
 		}
+		if(opaqueNodeTLV!=null){
+			//System.out.println("nodeNameTLV encoding LS len is "+String.valueOf(nodeNameTLV.getTLVValueLength()));
+			System.arraycopy(opaqueNodeTLV.getTlv_bytes(),0, this.bytes,offset, opaqueNodeTLV.getTotalTLVLength());
+			offset=offset+opaqueNodeTLV.getTotalTLVLength();
+		}
 
 		if(sidLabelTLV!=null){
 			System.arraycopy(sidLabelTLV.getTlv_bytes(),0, this.bytes,offset, sidLabelTLV.getTotalTLVLength());
@@ -590,6 +575,11 @@ public class LinkStateAttribute  extends PathAttribute{
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_NODE_NAME:
 				this.nodeNameTLV=new NodeNameNodeAttribTLV(this.bytes, offset);
 				break;
+
+			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_OPAQUE_NODE:
+				this.opaqueNodeTLV=new OpaqueNodeNodeAttribTLV(this.bytes, offset);
+				break;
+
 
 			case LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_IS_IS_AREA_ID:
 
@@ -787,6 +777,12 @@ public class LinkStateAttribute  extends PathAttribute{
 	public void setNodeNameTLV(NodeNameNodeAttribTLV nodeNameTLV) {
 		this.nodeNameTLV = nodeNameTLV;
 	}
+	public OpaqueNodeNodeAttribTLV getOpaqueNodeTLV() {
+		return opaqueNodeTLV;
+	}
+	public void setOpaqueNodeTLV(OpaqueNodeNodeAttribTLV opaque) {
+		this.opaqueNodeTLV = opaque;
+	}
 	public IS_IS_AreaIdentifierNodeAttribTLV getAreaIDTLV() {
 		return areaIDTLV;
 	}
@@ -951,6 +947,12 @@ public class LinkStateAttribute  extends PathAttribute{
 
 		if(this.nodeNameTLV!=null){
 			sb.append(this.nodeNameTLV.toString());
+			sb.append("\r\n");
+
+		}
+
+		if(this.opaqueNodeTLV!=null){
+			sb.append(this.opaqueNodeTLV.toString());
 			sb.append("\r\n");
 
 		}
