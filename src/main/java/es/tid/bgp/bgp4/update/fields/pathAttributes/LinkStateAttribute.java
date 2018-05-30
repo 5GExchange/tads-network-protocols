@@ -433,8 +433,10 @@ public class LinkStateAttribute  extends PathAttribute{
 		}
 		if(opaqueNodeTLV!=null){
 			//System.out.println("nodeNameTLV encoding LS len is "+String.valueOf(nodeNameTLV.getTLVValueLength()));
-			System.arraycopy(opaqueNodeTLV.getTlv_bytes(),0, this.bytes,offset, opaqueNodeTLV.getTotalTLVLength());
-			offset=offset+opaqueNodeTLV.getTotalTLVLength();
+			if (opaqueNodeTLV.getTlv_bytes()!=null){
+				System.arraycopy(opaqueNodeTLV.getTlv_bytes(),0, this.bytes,offset, opaqueNodeTLV.getTotalTLVLength());
+				offset=offset+opaqueNodeTLV.getTotalTLVLength();
+			}
 		}
 
 		if(sidLabelTLV!=null){
