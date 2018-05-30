@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4391c196-5080-46a8-8157-a126bb787e22" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/fields/pathAttributes/LinkStateAttribute.java" afterPath="$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/fields/pathAttributes/LinkStateAttribute.java" />
-    </list>
+    <list default="true" id="4391c196-5080-46a8-8157-a126bb787e22" name="Default" comment="" />
     <ignored path="network-protocols.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -27,8 +25,8 @@
       <file leaf-file-name="LinkStateAttribute.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/fields/pathAttributes/LinkStateAttribute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4054054">
-              <caret line="620" column="43" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.90733594">
+              <caret line="634" column="19" selection-start-line="634" selection-start-column="19" selection-end-line="634" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -656,8 +654,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/fields/pathAttributes/LinkStateAttribute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4054054">
-          <caret line="620" column="43" selection-start-line="620" selection-start-column="17" selection-end-line="620" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.90733594">
+          <caret line="634" column="19" selection-start-line="634" selection-start-column="19" selection-end-line="634" selection-end-column="19" />
           <folding />
         </state>
       </provider>
