@@ -263,6 +263,11 @@ public class LinkStateAttribute  extends PathAttribute{
 			nodeNameTLV.encode();
 			pathAttributeLength=pathAttributeLength+nodeNameTLV.getTotalTLVLength();
 		}
+		if(opaqueNodeTLV!=null){
+			opaqueNodeTLV.encode();
+			pathAttributeLength=pathAttributeLength+opaqueNodeTLV.getTotalTLVLength();
+		}
+
 		if(areaIDTLV!=null){
 			areaIDTLV.encode();
 			pathAttributeLength=pathAttributeLength+areaIDTLV.getTotalTLVLength();
