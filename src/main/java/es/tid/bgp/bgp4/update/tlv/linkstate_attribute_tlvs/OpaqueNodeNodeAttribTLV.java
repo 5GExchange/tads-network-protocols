@@ -76,7 +76,8 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 				e.printStackTrace();
 			}
 			offset=+4;
-			neighbours.put(as,ip_neigh);
+			if ((as!=null)&&(ip_neigh!=null))
+				neighbours.put(as,ip_neigh);
 
 		}
 	}
