@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4391c196-5080-46a8-8157-a126bb787e22" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/tlv/linkstate_attribute_tlvs/OpaqueNodeNodeAttribTLV.java" afterPath="$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/tlv/linkstate_attribute_tlvs/OpaqueNodeNodeAttribTLV.java" />
     </list>
     <ignored path="network-protocols.iws" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="OpaqueNodeNodeAttribTLV.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/tlv/linkstate_attribute_tlvs/OpaqueNodeNodeAttribTLV.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7528958">
-              <caret line="64" column="32" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.4054054">
+              <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -685,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/es/tid/bgp/bgp4/update/tlv/linkstate_attribute_tlvs/OpaqueNodeNodeAttribTLV.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7528958">
-          <caret line="64" column="32" selection-start-line="64" selection-start-column="20" selection-end-line="64" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.4054054">
+          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
           <folding />
         </state>
       </provider>
