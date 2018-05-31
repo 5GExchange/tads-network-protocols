@@ -4,6 +4,7 @@ import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -85,9 +86,19 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 	}
 
 	
-	public void setNeighbours(Hashtable<Inet4Address, Inet4Address> neig)
+	public void setNeighbours(Hashtable<Inet4Address, Inet4Address> neigs)
 	{
-		this.neighbours = neig;
+		this.neighbours= new Hashtable<Inet4Address, Inet4Address>();
+		Enumeration<Inet4Address> neigs_k= neigs.keys();
+		while (neigs_k.hasMoreElements()){
+			Inet4Address neig_k= neigs_k.nextElement();
+			Inet4Address nIP= neigs.get(neig_k);
+			if ((neig_k!=null)&&(nIP!=null)) {
+				this.neighbours.put(neig_k, nIP);
+			}
+		}
+
+		//this.neighbours = neigs;
 
 	}
 
