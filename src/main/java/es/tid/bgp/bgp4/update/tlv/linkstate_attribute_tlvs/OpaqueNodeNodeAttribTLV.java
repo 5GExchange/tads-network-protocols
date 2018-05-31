@@ -27,6 +27,7 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 	@Override
 	public void encode() {
 		int len= 0;
+		System.out.println("number of entries is "+String.valueOf(this.neighbours));
 
 		if (this.neighbours!= null) {
 			len=neighbours.size()*8;
@@ -40,9 +41,10 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 			Set<Inet4Address> keys= neighbours.keySet();
 			for (Inet4Address as: keys){
 				System.arraycopy(as.getAddress(),0, this.tlv_bytes, offset, 4);
-				offset=+4;
+				offset=offset+4;
 				System.arraycopy(neighbours.get(as).getAddress(),0, this.tlv_bytes, offset, 4);
-				offset=+4;
+				offset=offset+4;
+
 			}
 		}
 
@@ -69,7 +71,7 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			offset=+4;
+			offset=offset+4;
 			System.arraycopy(this.tlv_bytes,offset, ip_ip, 0, 4);
 			try {
 				ip_neigh=(Inet4Address)Inet4Address.getByAddress(ip_ip);
@@ -77,7 +79,7 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			offset=+4;
+			offset=offset+4;
 			if ((as!=null)&&(ip_neigh!=null))
 				System.out.println("AS="+as+" IP="+ip_neigh);
 				neighbours.put(as,ip_neigh);
