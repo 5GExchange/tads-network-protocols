@@ -110,7 +110,9 @@ public class LabelRROSubobject extends RROSubobject {
 		this.subobject_bytes=new byte[this.rrosolength];
 		
 		encodeSoHeader();
-		
+		this.subobject_bytes[2]=(byte)(flags);
+		this.subobject_bytes[3]=(byte)(cType);
+
 		this.subobject_bytes[4]=(byte)((contentsOfLabelObject>>24) & 0xFF);
 		this.subobject_bytes[5]=(byte)((contentsOfLabelObject>>16) & 0xFF);
 		this.subobject_bytes[6]=(byte)((contentsOfLabelObject>>8) & 0xFF);

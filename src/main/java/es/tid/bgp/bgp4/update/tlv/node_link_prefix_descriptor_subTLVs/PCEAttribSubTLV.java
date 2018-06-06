@@ -1,98 +1,24 @@
-package es.tid.bgp.bgp4.update.tlv.linkstate_attribute_tlvs;
+package es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs;
 
 import es.tid.bgp.bgp4.update.tlv.BGP4TLVFormat;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.OpaqueNodeTLVTypes;
-import es.tid.bgp.bgp4.update.tlv.node_link_prefix_descriptor_subTLVs.PCEAttribSubTLV;
 
-public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Set;
 
-	PCEAttribSubTLV pce;
+public class PCEAttribSubTLV extends BGP4TLVFormat{
 
-	public OpaqueNodeNodeAttribTLV(){
-		super();
-		//los flags estaban mal puestos
-		this.setTLVType(LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_OPAQUE_NODE);
-	}
-
-	public OpaqueNodeNodeAttribTLV(byte[] bytes, int offset){
-		super(bytes,offset);
-		decode();
-	}
-	@Override
-	public void encode() {
-		//Encode Node Opaque TLV
-		if (pce!=null){
-			pce.encode();
-			TLVValueLength=TLVValueLength+pce.getTotalTLVLength();
-		}
-		//Length
-		this.TotalTLVLength=TLVValueLength+4;
-		this.tlv_bytes=new byte[this.TotalTLVLength];
-		encodeHeader();
-		//Write the bytes
-		int offset=4;
-		if (pce!=null){
-			System.arraycopy(pce.getTlv_bytes(),0, this.tlv_bytes,offset, pce.getTotalTLVLength());
-			offset=offset+pce.getTotalTLVLength();
-		}
-
-	}
-
-	public void decode(){
-		boolean fin=false;
-		int offset = 4;
-		//Decoding Node Opaque TLV
-		while (!fin) {
-			int TLVType = BGP4TLVFormat.getType(this.tlv_bytes, offset);
-			int TLVLength = BGP4TLVFormat.getTotalTLVLength(this.tlv_bytes, offset);
-			//diferenciar en links y nodes para que no de error de compilacion ya que los id de los IPv4 son iguales
-			switch (TLVType) {
-				//LINK ATTRIBUTES
-				case OpaqueNodeTLVTypes.PCE_DESCRIPTORS_TLV_TYPE:
-					this.pce = new PCEAttribSubTLV(this.tlv_bytes, offset);
-					break;
-				default:
-					log.warn("Unknown TLV found: "+TLVType);
-
-
-			}
-
-			offset=offset+TLVLength;
-			if (offset>=(this.TLVValueLength)){
-				fin=true;
-			}
-		}
-	}
-
-	public PCEAttribSubTLV getPCEAttribSubTLV() {
-		return pce;
-	}
-	public void setPCEAttribSubTLV(PCEAttribSubTLV elem) {
-		pce = elem;
-	}
-
-
-	public String toString() {
-		StringBuffer sb=new StringBuffer(1000);
-		sb.append("Node Opaque:");
-		//if (this!=null){
-		if (this.pce!= null) {
-			sb.append("PCE TLV=\n"+pce.toString());
-		}
-
-		return sb.toString();
-	}
-
-
-	/*private byte[] name;
+	private byte[] name;
 	private Hashtable<Inet4Address, Inet4Address> neighbours = null;
 
-	public OpaqueNodeNodeAttribTLV(){
+	public PCEAttribSubTLV(){
 		super();
-		this.setTLVType(LinkStateAttributeTLVTypes.NODE_ATTRIBUTE_TLV_TYPE_OPAQUE_NODE);
+		this.setTLVType(OpaqueNodeTLVTypes.PCE_DESCRIPTORS_TLV_TYPE);
 	}
 
-	public OpaqueNodeNodeAttribTLV(byte[] bytes, int offset){
+	public PCEAttribSubTLV(byte[] bytes, int offset){
 		super(bytes,offset);
 		this.neighbours=new Hashtable<Inet4Address, Inet4Address>();
 		decode();
@@ -184,6 +110,21 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 		return this.neighbours;
 	}
 
+	/*
+		public Hashtable<String, DomainTEDB> getDomainTeds() {
+		Hashtable<String, DomainTEDB> domainTEDS= new Hashtable<String, DomainTEDB>();
+		Enumeration <String> tedks= teds.keys();
+		while (tedks.hasMoreElements()){
+			String teddk= tedks.nextElement();
+			TEDB tedd= teds.get(teddk);
+			if (tedd instanceof DomainTEDB) {
+				domainTEDS.put(teddk, (DomainTEDB) tedd);
+			}
+		}
+		return domainTEDS;
+	}
+
+	*/
 
 	public String toString() {
 		StringBuffer sb=new StringBuffer(1000);
@@ -200,6 +141,5 @@ public class OpaqueNodeNodeAttribTLV extends BGP4TLVFormat{
 		//}
 	    return sb.toString();
 	}
-	*/
 
 }
