@@ -194,62 +194,75 @@ public class LinkStateAttribute  extends PathAttribute{
 	}
 	@Override
 	public void encode() {
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Init LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		//Encode LinkStateAttribute
 
 		//LINK ATTRIBUTES
 		if (maximumLinkBandwidthTLV!=null){
 			maximumLinkBandwidthTLV.encode();
 			pathAttributeLength=pathAttributeLength+maximumLinkBandwidthTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX maximumLinkBandwidthTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if (maxReservableBandwidthTLV!=null){
 			maxReservableBandwidthTLV.encode();
 			pathAttributeLength=pathAttributeLength+maxReservableBandwidthTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX maxReservableBandwidthTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if (unreservedBandwidthTLV!=null){
 			unreservedBandwidthTLV.encode();
 			pathAttributeLength=pathAttributeLength+unreservedBandwidthTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX unreservedBandwidthTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if (metricTLV!=null){
 			metricTLV.encode();
 			pathAttributeLength=pathAttributeLength+metricTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX metricTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(administrativeGroupTLV!=null){
 			administrativeGroupTLV.encode();
 			pathAttributeLength=pathAttributeLength+administrativeGroupTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX administrativeGroupTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(linkProtectionTLV!=null){
 			linkProtectionTLV.encode();
 			pathAttributeLength=pathAttributeLength+linkProtectionTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX linkProtectionTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(IPv4RouterIDLocalNodeLATLV!=null){
 			IPv4RouterIDLocalNodeLATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeLATLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX IPv4RouterIDLocalNodeLATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(IPv4RouterIDRemoteNodeLATLV!=null){
 			IPv4RouterIDRemoteNodeLATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDRemoteNodeLATLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX IPv4RouterIDRemoteNodeLATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(dTEMetricTLV!=null){
 			dTEMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+dTEMetricTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX dTEMetricTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		//********** RUBEN *************
 		if(SharedRiskLinkGroupATLV!=null){
 			SharedRiskLinkGroupATLV.encode();
 			pathAttributeLength=pathAttributeLength+SharedRiskLinkGroupATLV.getTotalTLVLength();
-		}	
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX SharedRiskLinkGroupATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
+		}
 		if(TransceiverClassAndAppATLV!=null){
 			TransceiverClassAndAppATLV.encode();
 			pathAttributeLength=pathAttributeLength+TransceiverClassAndAppATLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX TransceiverClassAndAppATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(MF_OTP_ATLV!=null){
 			MF_OTP_ATLV.encode();
 			pathAttributeLength=pathAttributeLength+MF_OTP_ATLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX MF_OTP_ATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		//******************************
 		
@@ -258,28 +271,34 @@ public class LinkStateAttribute  extends PathAttribute{
 		if(nodeFlagBitsTLV!=null){
 			nodeFlagBitsTLV.encode();
 			pathAttributeLength=pathAttributeLength+nodeFlagBitsTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nodeFlagBitsTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(nodeNameTLV!=null){
 			nodeNameTLV.encode();
 			pathAttributeLength=pathAttributeLength+nodeNameTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nodeNameTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(opaqueNodeTLV!=null){
 			opaqueNodeTLV.encode();
 			pathAttributeLength=pathAttributeLength+opaqueNodeTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX opaqueNodeTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(areaIDTLV!=null){
 			areaIDTLV.encode();
 			pathAttributeLength=pathAttributeLength+areaIDTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX areaIDTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(IPv4RouterIDLocalNodeNATLV!=null){
 			IPv4RouterIDLocalNodeNATLV.encode();
 			pathAttributeLength=pathAttributeLength+IPv4RouterIDLocalNodeNATLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX IPv4RouterIDLocalNodeNATLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(sidLabelTLV!=null){
 			sidLabelTLV.encode();
 			pathAttributeLength=pathAttributeLength+sidLabelTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX sidLabelTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		//PREFIX Attributes
@@ -287,22 +306,26 @@ public class LinkStateAttribute  extends PathAttribute{
 		if(igpFlagBitsTLV!=null){
 			igpFlagBitsTLV.encode();
 			pathAttributeLength=pathAttributeLength+igpFlagBitsTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX igpFlagBitsTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(routeTagTLV!=null){
 			routeTagTLV.encode();
 			pathAttributeLength=pathAttributeLength+routeTagTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX routeTagTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(prefixMetricTLV!=null){
 			prefixMetricTLV.encode();
 			pathAttributeLength=pathAttributeLength+prefixMetricTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX prefixMetricTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		if(OSPFForwardingAddrTLV!=null){
 			OSPFForwardingAddrTLV.encode();
 			pathAttributeLength=pathAttributeLength+OSPFForwardingAddrTLV.getTotalTLVLength();
-		}			
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX OSPFForwardingAddrTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
+		}
 
 		if (availableLabels != null){
 			try {
@@ -312,6 +335,7 @@ public class LinkStateAttribute  extends PathAttribute{
 				e.printStackTrace();
 			}
 			pathAttributeLength=pathAttributeLength+availableLabels.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX availableLabels LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 		//UndirectionalLinkDelayDescriptorSubTLV undirectionalLinkDelayTLV;
@@ -325,36 +349,44 @@ public class LinkStateAttribute  extends PathAttribute{
 		if(undirectionalLinkDelayTLV!=null){
 			undirectionalLinkDelayTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalLinkDelayTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalLinkDelayTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(minMaxUndirectionalLinkDelayTLV!=null){
 			minMaxUndirectionalLinkDelayTLV.encode();
 			pathAttributeLength=pathAttributeLength+minMaxUndirectionalLinkDelayTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX minMaxUndirectionalLinkDelayTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(undirectionalDelayVariationTLV!=null){
 			undirectionalDelayVariationTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalDelayVariationTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalDelayVariationTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(undirectionalLinkLossTLV!=null){
 			undirectionalLinkLossTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalLinkLossTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalLinkLossTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(undirectionalResidualBwTLV!=null){
 			undirectionalResidualBwTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalResidualBwTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalResidualBwTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(undirectionalAvailableBwTLV!=null){
 			undirectionalAvailableBwTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalAvailableBwTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalAvailableBwTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 		if(undirectionalUtilizedBwTLV!=null){
 			undirectionalUtilizedBwTLV.encode();
 			pathAttributeLength=pathAttributeLength+undirectionalUtilizedBwTLV.getTotalTLVLength();
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX undirectionalUtilizedBwTLV LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 		}
 
 
 		//Length
 		this.length=pathAttributeLength+mandatoryLength;
 		this.bytes=new byte[this.length];
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX Final LEN CONTROL the is:" +String.valueOf(pathAttributeLength));
 
 		//Encode Header
 		encodeHeader();

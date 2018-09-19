@@ -149,8 +149,11 @@ public class BGP4Update extends BGP4Message
 		//Add Path Attributes
 		for(int i = 0; i < pathAttributes.size(); ++ i)
 		{
+			System.out.println(pathAttributes.get(i).toString());
+			System.out.println(String.valueOf(pathAttributes.get(i).getPathAttributeLength()));
 			System.arraycopy(pathAttributes.get(i).getBytes(), 0, messageBytes, offset, pathAttributes.get(i).getLength());
 			offset = offset + pathAttributes.get(i).getLength();
+
 		}
 		//Add NLRI
 		if(nlri != null)
