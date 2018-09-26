@@ -1,4 +1,4 @@
-netphony-network-protocols v1.3.3
+netphony-network-protocols v1.3.5
 =================================
 
 Repository branch build status in Travis CI:
@@ -50,7 +50,7 @@ To build the .jar file and run the tests, clone the repository, go to the main d
     <dependency>
       <groupId>es.tid.netphony</groupId>
       <artifactId>network-protocols</artifactId>
-      <version>1.3.2</version>
+      <version>1.3.5</version>
     </dependency>
  ```
  Authors keep also a copy of the artifact in maven central to facilitate the deployment. (*) In process
